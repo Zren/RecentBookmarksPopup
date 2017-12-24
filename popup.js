@@ -25,6 +25,22 @@ var randomPastelHsl = function() {
 	}
 }
 
+var currentColor = {
+	h: 120, // green
+	h: 30,
+	h: 40,
+}
+var hueStep = 37
+var nextPastelHsl = function() {
+	var c = { // clone
+		h: currentColor.h,
+		s: currentColor.s,
+		l: currentColor.l,
+	}
+	currentColor.h += hueStep
+	return c
+}
+
 var templates = document.getElementById('templates')
 var template = function(templateSelector, kwargs) {
 	var template = templates.querySelector(templateSelector)
@@ -63,7 +79,7 @@ var updateParentFolderTagMap = function() {
 			var bookmarkTreeNode = bookmarkTreeNodes[i]
 			if (typeof state.tagMap[bookmarkTreeNode.id] === "undefined") {
 				state.tagMap[bookmarkTreeNode.id] = bookmarkTreeNode.title
-				state.tagColorMap[bookmarkTreeNode.id] = randomPastelHsl()
+				state.tagColorMap[bookmarkTreeNode.id] = nextPastelHsl()
 			}
 		}
 		render()

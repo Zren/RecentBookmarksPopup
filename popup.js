@@ -40,6 +40,7 @@ var template = function(templateSelector, kwargs) {
 
 var defaultFaviconUrl = ''
 var state = {
+	mode: 'list',
 	tagMap: {},
 	tagColorMap: {},
 	rootNode: {
@@ -77,10 +78,45 @@ var updateBookmarksList = function() {
 	})
 }
 
+function adjustWindowSize() {
+	document.documentElement.style.height = "34px"
+	document.body.style.height = "34px"
+}
+
+function slideAndRemove(bookmarkListItem) {
+	var duration = 400
+	bookmarkListItem.style.overflow = "hidden"
+	bookmarkListItem.style.height = getComputedStyle(bookmarkListItem).height
+	bookmarkListItem.style.transition = "all " + duration + "ms ease-in-out"
+	bookmarkListItem.style.left = "100%"
+	setTimeout(function() {
+		bookmarkListItem.style.height = "1px"
+	}, duration/3)
+	setTimeout(function() {
+		bookmarkListItem.parentNode.removeChild(bookmarkListItem)
+	}, duration)
+	setTimeout(function() {
+		adjustWindowSize()
+	}, duration+1)
+}
+
 var onBookmarkItemClick = function(e) {
-	chrome.tabs.create({
-		url: this.href
-	});
+	var bookmarkId = this.getAttribute('data-id')
+	if (state.mode == 'list') {
+		chrome.tabs.create({
+			url: this.href
+		});
+	} else if (state.mode == 'archive') {
+		// chrome.bookmarks.move
+	} else if (state.mode == 'delete') {
+		var bookmarkListItem = this
+		// chrome.bookmarks.remove(bookmarkId, function() {
+		// 	slideAndRemove(bookmarkListItem)
+		// })
+		slideAndRemove(bookmarkListItem)
+	} else {
+		alert('unknown state.mode: ' + state.mode)
+	}
 }
 var renderBookmarksList = function() {
 	var bookmarkList = document.getElementById('bookmarkList')
@@ -101,6 +137,7 @@ var renderBookmarksList = function() {
 			}
 		}
 		var e = template('#bookmarkListItem', {
+			id: bookmarkTreeNode.id,
 			title: encodeEntities(bookmarkTreeNode.title),
 			url: bookmarkTreeNode.url,
 			host: url.host,
@@ -112,6 +149,25 @@ var renderBookmarksList = function() {
 		bookmarkList.appendChild(e)
 	}
 }
+
+function setMode(nextMode) {
+	for (var e of document.querySelectorAll('#toolbar .tab')) {
+		e.classList.remove('current')
+	}
+	var e = document.querySelector('#toolbar .tab[data-mode="' + nextMode + '"]')
+	e.classList.add('current')
+	state.mode = nextMode
+}
+
+function setupToolbar() {
+	for (var e of document.querySelectorAll('#toolbar .tab')) {
+		e.addEventListener('click', function(e) {
+			var nextMode = this.getAttribute('data-mode')
+			setMode(nextMode)
+		})
+	}
+}
+
 var doRender = function() {
 	console.log('doRender')
 	renderBookmarksList()
@@ -123,5 +179,6 @@ var render = function() {
 }
 var main = function() {
 	updateBookmarksList()
+	setupToolbar()
 }
 document.addEventListener('DOMContentLoaded', main);

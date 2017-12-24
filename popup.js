@@ -123,7 +123,22 @@ var onBookmarkItemClick = function(e) {
 			url: this.href
 		});
 	} else if (state.mode == 'archive') {
-		// chrome.bookmarks.move
+		chrome.bookmarks.search('Archive', function(bookmarkTreeNodes) {
+			for (var i = 0; i < bookmarkTreeNodes.length; i++) {
+				var bookmarkTreeNode = bookmarkTreeNodes[i]
+				if (!bookmarkTreeNode.url && bookmarkTreeNode.title == 'Archive') {
+					console.log('archive', bookmarkTreeNode)
+					console.log('move', bookmarkId, bookmarkTreeNode.id)
+					chrome.bookmarks.move(bookmarkId, {
+						parentId: bookmarkTreeNode.id
+					}, function(result) {
+						console.log('move.result', result)
+						updateBookmarksList()
+					})
+				}
+			}
+		})
+		
 	} else if (state.mode == 'delete') {
 		var bookmarkListItem = this
 		// chrome.bookmarks.remove(bookmarkId, function() {

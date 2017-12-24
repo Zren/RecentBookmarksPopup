@@ -40,7 +40,7 @@ var template = function(templateSelector, kwargs) {
 
 var defaultFaviconUrl = ''
 var state = {
-	mode: 'list',
+	mode: 'open',
 	tagMap: {},
 	tagColorMap: {},
 	rootNode: {
@@ -102,7 +102,7 @@ function slideAndRemove(bookmarkListItem) {
 
 var onBookmarkItemClick = function(e) {
 	var bookmarkId = this.getAttribute('data-id')
-	if (state.mode == 'list') {
+	if (state.mode == 'open') {
 		chrome.tabs.create({
 			url: this.href
 		});

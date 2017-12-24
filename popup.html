@@ -1,0 +1,75 @@
+<html>
+<head>
+	<style type="text/css">
+		html, body { margin: 0; padding: 0; }
+		.bookmarks-item {
+			display: flex;
+			color: #111;
+			text-decoration: none;
+		}
+		.bookmarks-item:hover {
+			background: #ddd;
+		}
+		.website-icon {
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: contain;
+			height: 16px;
+			margin: 4px;
+			width: 16px;
+		}
+		.website-title {
+			-webkit-margin-start: 4px;
+			-webkit-margin-end: 4px;
+			flex: 1;
+			overflow: hidden;
+			text-decoration: none;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			line-height: 24px;
+		}
+		.bookmark-tag {
+			line-height: 24px;
+			border-radius: 2px;
+			border: 1px solid #a7c391;
+			background: #e2efdc;
+			background: linear-gradient(to bottom, #e2efdc 0%,#cae9bd 100%);
+			margin: 4px 2px;
+			padding: 0px 2px;
+			font-size: 12px;
+			font-weight: bold;
+			color: #87a478;
+			box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 1px 0 rgba(0,0,0,0.05);
+			text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+			line-height: 16px;
+			visibility: visible;
+			background-clip: padding-box;
+			background-origin: border-box;
+			opacity: 1;
+			transition: opacity 250ms, margin 250ms, visibility 250ms linear 0ms;
+		}
+		.bookmark-tag[aria-label=""] {
+			display: none;
+		}
+	</style>
+</head>
+<body style="width: 320px; height: 290px;">
+
+<div id="app">
+	<div id="bookmarkList"></div>
+</div>
+
+<div id="templates" style="display:none;">
+	<div id="bookmarkListItem">
+		<a href="{{url}}" class="bookmarks-item" role="listitem" aria-label="{{title}}">
+			<div class="website-icon" style="background-image: url('{{faviconUrl}}');"></div>
+			<div class="website-title">{{title}}</div>
+			<div class="bookmark-tag" aria-label="{{tag}}">{{tag}}</div>
+		</div>
+	</div>
+	
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>

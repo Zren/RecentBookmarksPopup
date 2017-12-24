@@ -1,0 +1,19 @@
+{
+  "name": "Recent Bookmarks",
+  "version": "1",
+  "description": "List recent booksmarks",
+  "permissions": [
+    "bookmarks"
+  ],
+  "browser_action": {
+    "default_title": "Recent Bookmarks",
+    "default_icon": "icons/rating-48px.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icons/rating-16px.png",
+    "48": "icons/rating-48px.png",
+    "128": "icons/rating-128px.png"
+  },
+  "manifest_version": 2
+}

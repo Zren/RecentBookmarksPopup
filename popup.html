@@ -32,8 +32,7 @@
 			line-height: 24px;
 			border-radius: 2px;
 			border: 1px solid #a7c391;
-			background: #e2efdc;
-			background: linear-gradient(to bottom, #e2efdc 0%,#cae9bd 100%);
+			background-color: #e2efdc;
 			margin: 4px 2px;
 			padding: 0px 2px;
 			font-size: 12px;
@@ -64,7 +63,8 @@
 		<a href="{{url}}" class="bookmarks-item" role="listitem" aria-label="{{title}}">
 			<div class="website-icon" style="background-image: url('{{faviconUrl}}');"></div>
 			<div class="website-title">{{title}}</div>
-			<div class="bookmark-tag" aria-label="{{tag}}">{{tag}}</div>
+			<div class="bookmark-tag" aria-label="{{tag}}"
+				style="color: {{tagColorStart}} 40%); background-color: {{tagColorStart}} 80%); border-color: {{tagColorStart}} 70%);">{{tag}}</div>
 		</div>
 	</div>
 	

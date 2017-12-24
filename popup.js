@@ -4,10 +4,25 @@ var el = function(html) {
 	return e.removeChild(e.firstChild)
 }
 
-function encodeEntities(str) {
+var encodeEntities = function(str) {
 	var e = document.createElement('div')
 	e.textContent = str
 	return e.innerHTML
+}
+
+var randomPastelColor = function() {
+	// Based on the Random Pastel code from StackOverflow
+	// https://stackoverflow.com/a/43195379/947742
+	return "hsl(" + 360 * Math.random() + ', ' + // Hue: Any
+		(25 + 70 * Math.random()) + '%, ' + // Saturation: 25-95
+		(40 + 30 * Math.random()) + '%)'; // Lightness: 40-70
+}
+var randomPastelHsl = function() {
+	return {
+		h: 360 * Math.random(), // Hue: Any
+		s: (25 + 20 * Math.random()), // Saturation: 25-95
+		l: (40 + 30 * Math.random()), // Lightness: 40-70
+	}
 }
 
 var templates = document.getElementById('templates')
@@ -26,6 +41,7 @@ var template = function(templateSelector, kwargs) {
 var defaultFaviconUrl = ''
 var state = {
 	tagMap: {},
+	tagColorMap: {},
 	rootNode: {
 		children: [],
 	},
@@ -44,7 +60,10 @@ var updateParentFolderTagMap = function() {
 	chrome.bookmarks.get(parentIdList, function(bookmarkTreeNodes) {
 		for (var i = 0; i < bookmarkTreeNodes.length; i++) {
 			var bookmarkTreeNode = bookmarkTreeNodes[i]
-			state.tagMap[bookmarkTreeNode.id] = bookmarkTreeNode.title
+			if (typeof state.tagMap[bookmarkTreeNode.id] === "undefined") {
+				state.tagMap[bookmarkTreeNode.id] = bookmarkTreeNode.title
+				state.tagColorMap[bookmarkTreeNode.id] = randomPastelHsl()
+			}
 		}
 		render()
 	})
@@ -74,12 +93,18 @@ var renderBookmarksList = function() {
 		if (url.host) {
 			hostFaviconUrl = 'https://' + url.host + '/favicon.ico'
 		}
+		var tagColorStart = ''
+		if (bookmarkTreeNode.parentId) {
+			var c = state.tagColorMap[bookmarkTreeNode.parentId]
+			var tagColorStart = 'hsl(' + c.h + ', ' + c.s + '%,'
+		}
 		var e = template('#bookmarkListItem', {
 			title: encodeEntities(bookmarkTreeNode.title),
 			url: bookmarkTreeNode.url,
 			host: url.host,
 			faviconUrl: hostFaviconUrl || defaultFaviconUrl,
 			tag: state.tagMap[bookmarkTreeNode.parentId] || '',
+			tagColorStart: tagColorStart,
 		})
 		e.addEventListener('click', onBookmarkItemClick)
 		bookmarkList.appendChild(e)

@@ -100,7 +100,7 @@ function adjustWindowSize() {
 	document.body.style.height = "34px"
 }
 
-function slideAndRemove(bookmarkListItem) {
+function slideAndRemove(bookmarkListItem, callback) {
 	var duration = 400
 	bookmarkListItem.style.overflow = "hidden"
 	bookmarkListItem.style.height = getComputedStyle(bookmarkListItem).height
@@ -114,6 +114,9 @@ function slideAndRemove(bookmarkListItem) {
 	}, duration)
 	setTimeout(function() {
 		adjustWindowSize()
+		if (typeof callback !== "undefined") {
+			callback()
+		}
 	}, duration+1)
 }
 
@@ -142,10 +145,11 @@ var onBookmarkItemClick = function(e) {
 		
 	} else if (state.mode == 'delete') {
 		var bookmarkListItem = this
-		// chrome.bookmarks.remove(bookmarkId, function() {
-		// 	slideAndRemove(bookmarkListItem)
-		// })
-		slideAndRemove(bookmarkListItem)
+		chrome.bookmarks.remove(bookmarkId, function() {
+			slideAndRemove(bookmarkListItem, function() {
+				updateBookmarksList()
+			})
+		})
 	} else {
 		alert('unknown state.mode: ' + state.mode)
 	}

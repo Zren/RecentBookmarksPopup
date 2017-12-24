@@ -54,6 +54,7 @@ var template = function(templateSelector, kwargs) {
 	return cookedElement
 }
 
+var numRecentBookmarks = 20 // 20 fits nicely without a scrollbar
 var defaultFaviconUrl = ''
 var state = {
 	mode: 'open',
@@ -87,7 +88,7 @@ var updateParentFolderTagMap = function() {
 }
 
 var updateBookmarksList = function() {
-	chrome.bookmarks.getRecent(20, function(bookmarkTreeNodes) {
+	chrome.bookmarks.getRecent(numRecentBookmarks, function(bookmarkTreeNodes) {
 		state.rootNode.children = bookmarkTreeNodes
 		updateParentFolderTagMap()
 		render()

@@ -96,7 +96,9 @@ var renderBookmarksList = function() {
 		var tagColorStart = ''
 		if (bookmarkTreeNode.parentId) {
 			var c = state.tagColorMap[bookmarkTreeNode.parentId]
-			var tagColorStart = 'hsl(' + c.h + ', ' + c.s + '%,'
+			if (c) {
+				tagColorStart = 'hsl(' + c.h + ', ' + c.s + '%,'
+			}
 		}
 		var e = template('#bookmarkListItem', {
 			title: encodeEntities(bookmarkTreeNode.title),

@@ -54,10 +54,10 @@ var template = function(templateSelector, kwargs) {
 	return cookedElement
 }
 
-var numRecentBookmarks = 20 // 20 fits nicely without a scrollbar
 var defaultFaviconUrl = ''
 var state = {
 	mode: 'open',
+	numRecentBookmarks: 20, // 20 fits nicely without a scrollbar
 	tagMap: {},
 	tagColorMap: {},
 	rootNode: {
@@ -88,7 +88,7 @@ var updateParentFolderTagMap = function() {
 }
 
 var updateBookmarksList = function() {
-	chrome.bookmarks.getRecent(numRecentBookmarks, function(bookmarkTreeNodes) {
+	chrome.bookmarks.getRecent(state.numRecentBookmarks, function(bookmarkTreeNodes) {
 		state.rootNode.children = bookmarkTreeNodes
 		updateParentFolderTagMap()
 		render()
@@ -195,13 +195,19 @@ function setMode(nextMode) {
 	state.mode = nextMode
 }
 
+function fetchMoreBookmarks() {
+	state.numRecentBookmarks += 100
+	updateBookmarksList()
+}
+
 function setupToolbar() {
-	for (var e of document.querySelectorAll('#toolbar .tab')) {
+	for (var e of document.querySelectorAll('#toolbar .tab[data-mode]')) {
 		e.addEventListener('click', function(e) {
 			var nextMode = this.getAttribute('data-mode')
 			setMode(nextMode)
 		})
 	}
+	document.querySelector('#toolbar .tab#fetch-more').addEventListener('click', fetchMoreBookmarks);
 }
 
 var doRender = function() {

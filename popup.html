@@ -70,13 +70,13 @@
 			text-align: center;
 		}
 
-		#toolbar > .left-grounp {
+		#toolbar > .left-group {
 			position: absolute;
 			top: 0;
 			left: 0;
 		}
 
-		#toolbar > .right-grounp {
+		#toolbar > .right-group {
 			position: absolute;
 			top: 0;
 			right: 0;
@@ -111,6 +111,7 @@
 			margin-left: -1px;
 		}
 
+		#toolbar .tab-group .tab:active,
 		#toolbar .tab-group .tab.current {
 			background: rgb(222,222,226);
 			background: linear-gradient(to bottom, rgba(222,222,226,1) 0%,rgba(225,225,228,1) 100%);
@@ -135,6 +136,9 @@
 			<a data-mode="open" class="tab current">Open</a>
 			<a data-mode="archive" class="tab">Archive</a>
 			<a data-mode="delete" class="tab">Delete</a>
+		</div>
+		<div class="right-group tab-group">
+			<a id="fetch-more" class="tab">More</a>
 		</div>
 	</div>
 </div>

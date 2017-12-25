@@ -27,10 +27,10 @@ var randomPastelHsl = function() {
 
 var currentColor = {
 	h: 120, // green
-	h: 30,
-	h: 40,
+	s: 30,
+	l: 40,
 }
-var hueStep = 37
+var hueStep = 77
 var nextPastelHsl = function() {
 	var c = { // clone
 		h: currentColor.h,

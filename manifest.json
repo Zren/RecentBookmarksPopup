@@ -3,7 +3,8 @@
   "version": "1",
   "description": "List recent booksmarks",
   "permissions": [
-    "bookmarks"
+    "bookmarks",
+    "chrome://favicon/"
   ],
   "browser_action": {
     "default_title": "Recent Bookmarks",

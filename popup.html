@@ -146,7 +146,7 @@
 <div id="templates" style="display:none;">
 	<div id="bookmarkListItem">
 		<a href="{{url}}" class="bookmarks-item" role="listitem" aria-label="{{title}}" data-id="{{id}}">
-			<div class="website-icon" style="background-image: url('{{faviconUrl}}');"></div>
+			<div class="website-icon" style="background-image: -webkit-image-set(url('chrome://favicon/size/16@1x/{{url}}') 1x, url('chrome://favicon/size/16@2x/{{url}}') 2x);"></div>
 			<div class="website-title">{{title}}</div>
 			<div class="bookmark-tag" aria-label="{{tag}}"
 				style="color: {{tagColorStart}} 40%); background-color: {{tagColorStart}} 80%); border-color: {{tagColorStart}} 70%);">{{tag}}</div>

@@ -54,7 +54,6 @@ var template = function(templateSelector, kwargs) {
 	return cookedElement
 }
 
-var defaultFaviconUrl = ''
 var state = {
 	mode: 'open',
 	numRecentBookmarks: 20, // 20 fits nicely without a scrollbar
@@ -161,10 +160,6 @@ var renderBookmarksList = function() {
 	for (var i = 0; i < state.rootNode.children.length; i++) {
 		var bookmarkTreeNode = state.rootNode.children[i]
 		var url = new URL(bookmarkTreeNode.url)
-		var hostFaviconUrl = ''
-		if (url.host) {
-			hostFaviconUrl = 'https://' + url.host + '/favicon.ico'
-		}
 		var tagColorStart = ''
 		if (bookmarkTreeNode.parentId) {
 			var c = state.tagColorMap[bookmarkTreeNode.parentId]
@@ -177,7 +172,6 @@ var renderBookmarksList = function() {
 			title: encodeEntities(bookmarkTreeNode.title),
 			url: bookmarkTreeNode.url,
 			host: url.host,
-			faviconUrl: hostFaviconUrl || defaultFaviconUrl,
 			tag: state.tagMap[bookmarkTreeNode.parentId] || '',
 			tagColorStart: tagColorStart,
 		})

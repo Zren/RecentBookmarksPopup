@@ -41,9 +41,8 @@ var nextPastelHsl = function() {
 	return c
 }
 
-var templates = document.getElementById('templates')
 var template = function(templateSelector, kwargs) {
-	var template = templates.querySelector(templateSelector)
+	var template = document.querySelector('template' + templateSelector)
 	var templateHtml = template.innerHTML.trim()
 	var mustacheRegex = /\{\{(\w+?)\}\}/g
 	var mustacheReplacer = function(match, p1, offset, string) {

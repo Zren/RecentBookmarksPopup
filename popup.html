@@ -91,7 +91,10 @@
 			font-size: 13px;
 		}
 
-		#toolbar .tab-group .tab {
+		#toolbar .tab-group button.tab {
+			border: none;
+			font-size: inherit;
+			font-family: inherit;
 			float: left;
 			min-width: 34px;
 			border-right: 1px solid #c7c8c9;
@@ -103,7 +106,7 @@
 			user-select: none;
 		}
 
-		#toolbar .tab-group .tab:hover {
+		#toolbar .tab-group button.tab:hover {
 			border: 1px solid rgba(0,0,0,0.1);
 			border-right: 1px solid rgba(0,0,0,0.2);
 			border-bottom: none;
@@ -111,8 +114,8 @@
 			margin-left: -1px;
 		}
 
-		#toolbar .tab-group .tab:active,
-		#toolbar .tab-group .tab.current {
+		#toolbar .tab-group button.tab:active,
+		#toolbar .tab-group button.tab.current {
 			background: rgb(222,222,226);
 			background: linear-gradient(to bottom, rgba(222,222,226,1) 0%,rgba(225,225,228,1) 100%);
 			border: 1px solid rgba(0,0,0,0.15);
@@ -121,7 +124,7 @@
 			margin-left: -1px;
 			box-shadow: 1px 0px 0px 0px rgba(255,255,255,0.25), -1px 0px 0px 0px rgba(255,255,255,0.25), 0px 1px 0px 0px rgba(0,0,0,0.1) inset, 0 -1px 0 rgba(0,0,0,0.2);
 		}
-		#toolbar .tab-group .tab[data-mode="delete"].current {
+		#toolbar .tab-group button.tab[data-mode="delete"].current {
 			background: #ee6644;
 			background: linear-gradient(to bottom, #ee6644 0%, #ff7755 100%);
 		}
@@ -133,12 +136,12 @@
 	<div id="bookmarkList"></div>
 	<div id="toolbar">
 		<div class="center-group tab-group">
-			<a data-mode="open" class="tab current">Open</a>
-			<a data-mode="archive" class="tab">Archive</a>
-			<a data-mode="delete" class="tab">Delete</a>
+			<button data-mode="open" class="tab current">Open</button>
+			<button data-mode="archive" class="tab">Archive</button>
+			<button data-mode="delete" class="tab">Delete</button>
 		</div>
 		<div class="right-group tab-group">
-			<a id="fetch-more" class="tab">More</a>
+			<button id="fetch-more" class="tab">More</button>
 		</div>
 	</div>
 </div>

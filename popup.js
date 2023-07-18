@@ -119,6 +119,20 @@ function slideAndRemove(bookmarkListItem, callback) {
 	}, duration+1)
 }
 
+function getArchiveFolder(callback) {
+	chrome.bookmarks.search('Archive', function(bookmarkTreeNodes) {
+		for (var i = 0; i < bookmarkTreeNodes.length; i++) {
+			var bookmarkTreeNode = bookmarkTreeNodes[i]
+			if (!bookmarkTreeNode.url && bookmarkTreeNode.title == 'Archive') {
+				console.log('archive', bookmarkTreeNode)
+				callback(bookmarkTreeNode)
+				return
+			}
+		}
+		callback(null)
+	})
+}
+
 var onBookmarkItemClick = function(e) {
 	var bookmarkId = this.getAttribute('data-id')
 	if (state.mode == 'open') {
@@ -126,20 +140,14 @@ var onBookmarkItemClick = function(e) {
 			url: this.href
 		});
 	} else if (state.mode == 'archive') {
-		chrome.bookmarks.search('Archive', function(bookmarkTreeNodes) {
-			for (var i = 0; i < bookmarkTreeNodes.length; i++) {
-				var bookmarkTreeNode = bookmarkTreeNodes[i]
-				if (!bookmarkTreeNode.url && bookmarkTreeNode.title == 'Archive') {
-					console.log('archive', bookmarkTreeNode)
-					console.log('move', bookmarkId, bookmarkTreeNode.id)
-					chrome.bookmarks.move(bookmarkId, {
-						parentId: bookmarkTreeNode.id
-					}, function(result) {
-						console.log('move.result', result)
-						updateBookmarksList()
-					})
-				}
-			}
+		getArchiveFolder(function(bookmarkTreeNode) {
+			console.log('move', bookmarkId, bookmarkTreeNode.id)
+			chrome.bookmarks.move(bookmarkId, {
+				parentId: bookmarkTreeNode.id
+			}, function(result) {
+				console.log('move.result', result)
+				updateBookmarksList()
+			})
 		})
 		
 	} else if (state.mode == 'delete') {
@@ -201,6 +209,13 @@ function setupToolbar() {
 			setMode(nextMode)
 		})
 	}
+	getArchiveFolder(function(archiveTreeNode){
+		if (archiveTreeNode == null) {
+			var archiveModeBtn = document.querySelector('#toolbar .tab[data-mode="archive"]')
+			archiveModeBtn.setAttribute('disabled', '')
+			archiveModeBtn.setAttribute('title', 'Create a folder named \"Archive\".')
+		}
+	})
 	document.querySelector('#toolbar .tab#fetch-more').addEventListener('click', fetchMoreBookmarks);
 }
 

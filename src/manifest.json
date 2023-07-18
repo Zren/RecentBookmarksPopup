@@ -4,8 +4,15 @@
   "description": "List recent booksmarks",
   "permissions": [
     "bookmarks",
+    "storage",
+    "tabs",
     "chrome://favicon/"
   ],
+  "background": {
+    "scripts": [
+      "faviconcacher.js"
+    ]
+  },
   "browser_action": {
     "default_title": "Recent Bookmarks",
     "default_icon": "icons/rating-32px.png",

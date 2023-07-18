@@ -22,9 +22,15 @@
 			background-position: center;
 			background-repeat: no-repeat;
 			background-size: contain;
-			height: 16px;
-			margin: 4px;
-			width: 16px;
+			width: 20px;
+			height: 20px;
+			min-width: 20px;
+			max-width: 20px;
+			border-radius: 4px;
+			margin: 3px 4px;
+		}
+		.website-icon.icon-bookmark-overlay {
+			background-image: url(icons/defaultFaviconOverlay.svg);
 		}
 		.website-title {
 			-webkit-margin-start: 4px;
@@ -149,7 +155,7 @@
 
 <template id="bookmarkListItem">
 	<a href="{{url}}" class="bookmarks-item" role="listitem" aria-label="{{title}}" data-id="{{id}}">
-		<div class="website-icon" style="background-image: -webkit-image-set(url('chrome://favicon/size/16@1x/{{url}}') 1x, url('chrome://favicon/size/16@2x/{{url}}') 2x);"></div>
+		<div class="website-icon favicon"></div>
 		<div class="website-title">{{title}}</div>
 		<div class="bookmark-tag" aria-label="{{tag}}"
 			style="color: {{tagColorStart}} 40%); background-color: {{tagColorStart}} 80%); border-color: {{tagColorStart}} 70%);">{{tag}}</div>

@@ -1,3 +1,6 @@
+var isFirefox = typeof browser !== 'undefined'
+var isChrome = typeof browser === 'undefined'
+
 var el = function(html) {
 	var e = document.createElement('div')
 	e.innerHTML = html
@@ -53,6 +56,9 @@ var template = function(templateSelector, kwargs) {
 	return cookedElement
 }
 
+var cache = {
+	faviconHostnameList: [],
+}
 var state = {
 	mode: 'open',
 	numRecentBookmarks: 20, // 20 fits nicely without a scrollbar
@@ -90,6 +96,84 @@ var updateBookmarksList = function() {
 		state.rootNode.children = bookmarkTreeNodes
 		updateParentFolderTagMap()
 		render()
+		fetchFavicons()
+	})
+}
+
+function hslFromHostname(urlHostname) {
+	var hostname = urlHostname.replace(/^www\./, '')
+	var aCode = 'a'.charCodeAt(0)
+	var zCode = 'z'.charCodeAt(0)
+	var hueRatio = (hostname.toLowerCase().charCodeAt(0) - aCode) / (zCode - aCode)
+	var hue = Math.round(255 * hueRatio)
+	var satRatio = (hostname.toLowerCase().charCodeAt(1) - aCode) / (zCode - aCode)
+	var sat = 60 + Math.round(40 * satRatio)
+	var ligRatio = (hostname.toLowerCase().charCodeAt(2) - aCode) / (zCode - aCode)
+	var lig = 10 + Math.round(30 * satRatio)
+	return 'hsl(' + hue + ', ' + sat + '%, ' + lig + '%)'
+}
+
+// We can't use @media (prefers-color-scheme: dark) CSS for some reason,
+// so we use this JS media query and toggle body[lwt-newtab-brighttext] attribute.
+// https://github.com/mozilla/gecko-dev/blob/master/browser/base/content/contentTheme.js
+const prefersDarkQuery = window.matchMedia("(prefers-color-scheme: dark)")
+
+function fixDarkFavIcon(hostname, favIconUrl) {
+	if (hostname == 'github.com') {
+		var dataPrefix = 'data:image/svg+xml;base64,'
+		if (favIconUrl.startsWith(dataPrefix)) {
+			var dataStr = favIconUrl.substr(dataPrefix.length)
+			var svgStr1 = atob(dataStr)
+			var svgStr2 = svgStr1.replace(' fill="#24292E"', ' fill="#FFFFFF"')
+			if (svgStr1 != svgStr2) {
+				var newFavIconUrl = dataPrefix + btoa(svgStr2)
+				return newFavIconUrl
+			}
+		}
+	}
+	return favIconUrl
+}
+
+function fetchFavicons(callback) {
+	var hostnameList = document.querySelectorAll('.favicon[data-hostname]')
+	hostnameList = Array.prototype.map.call(hostnameList, function(placeIcon) {
+		return placeIcon.getAttribute('data-hostname')
+	})
+	var keys = {}
+	for (var hostname of hostnameList) {
+		if (!cache.faviconHostnameList.includes(hostname)) {
+			var hostnameKey = 'favIconUrl-' + hostname
+			keys[hostnameKey] = ''
+			cache.faviconHostnameList.push(hostname)
+		}
+	}
+	chrome.storage.local.get(keys, function(items){
+		var keys = Object.keys(items)
+		// console.log('fetchFavicons', keys)
+
+		var style = document.querySelector('style#favicon-style')
+		if (!style) {
+			style = document.createElement('style')
+			style.setAttribute('type', 'text/css')
+			style.setAttribute('id', 'favicon-style')
+			document.head.appendChild(style) // Must add to DOM before sheet property is available
+		}
+		var stylesheet = style.sheet
+		for (var key of keys) {
+			var hostname = key.substr('favIconUrl-'.length)
+			var favIconUrl = items[key]
+			if (favIconUrl) {
+				if (prefersDarkQuery.matches) {
+					favIconUrl = fixDarkFavIcon(hostname, favIconUrl)
+				}
+				var selector = '.favicon[data-hostname="' + hostname + '"]'
+				var rule = selector + ' { background-image: url(' + favIconUrl + '); background-color: transparent !important; }'
+				stylesheet.insertRule(rule, stylesheet.cssRules.length)
+			}
+		}
+		if (callback) {
+			callback()
+		}
 	})
 }
 
@@ -185,6 +269,15 @@ var renderBookmarksList = function() {
 			tag: state.tagMap[bookmarkTreeNode.parentId] || '',
 			tagColorStart: tagColorStart,
 		})
+		var favicon = e.querySelector('.favicon')
+		if (isChrome) {
+			favicon.style.backgroundImage = "-webkit-image-set(url('chrome://favicon/size/16@1x/" + encodeURI(bookmarkTreeNode.url) + "') 1x, url('chrome://favicon/size/16@2x/" + encodeURI(bookmarkTreeNode.url) + "') 2x);"
+		} else { // isFirefox
+			var iconBgColor = hslFromHostname(url.hostname)
+			favicon.style.backgroundColor = iconBgColor
+			favicon.classList.add('icon-bookmark-overlay')
+			favicon.setAttribute('data-hostname', url.hostname)
+		}
 		e.addEventListener('click', onBookmarkItemClick)
 		bookmarkList.appendChild(e)
 	}

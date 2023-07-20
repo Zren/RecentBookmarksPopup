@@ -33,10 +33,11 @@ html, body { margin: 0; padding: 0; }
 		--textColor: rgb(251,251,254);
 		--themeLightness: 0%;
 		--themeShadowLightness: 60%;
-		--toolbarBGColor1: rgb(43, 42, 51);
-		--toolbarBGColor2: rgb(20, 20, 28);
-		--toolbarOutlineColor: hsl(240, 5%, 5%);
-		--toolbarTabSepratorColor: hsl(240, 5%, 5%);
+		--toolbarBGColor1: rgb(65, 64, 77);
+		--toolbarBGColor2: rgb(51, 51, 60);
+		--toolbarOutlineColor: rgb(53, 53, 55);
+		--toolbarTabShadow: hsla(0, 0%, var(--themeLightness), 0.1);
+		--toolbarTabSepratorColor: rgb(40, 40, 43);
 		--toolbarHoverBGColor: hsla(0, 0%, var(--themeShadowLightness), 0.3);
 	}
 }
@@ -191,7 +192,7 @@ body {
 	margin-left: -1px;
 }
 
-#toolbar .tab-group button.tab:active,
+#toolbar .tab-group button.tab:active:not([disabled]),
 #toolbar .tab-group button.tab.current {
 	background: var(--toolbarActiveBGColor1);
 	background: linear-gradient(to bottom, var(--toolbarActiveBGColor1) 0%, var(--toolbarActiveBGColor2) 100%);

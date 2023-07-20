@@ -1,12 +1,31 @@
 html, body { margin: 0; padding: 0; }
 
+:root {
+	--toolbar-height: 34px;
+	--bookmark-height: 24px;
+	--favicon-size: 20px;
+	--tag-font-size: 12px;
+	--tag-padding: 2px;
+}
+* {
+	box-sizing: border-box;
+}
+
 body {
 	width: 390px;
-	min-height: 34px;
+	min-height: var(--toolbar-height);
+	display: flex;
+	overflow-y: hidden;
+}
+
+#app {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
 }
 
 #bookmarkList {
-	max-height: calc(600px - 34px - 24px);
+	max-height: calc(600px - var(--toolbar-height) - var(--bookmark-height));
 	overflow-y: auto;
 }
 .bookmarks-item {
@@ -24,12 +43,12 @@ body {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
-	width: 20px;
-	height: 20px;
-	min-width: 20px;
-	max-width: 20px;
+	width: var(--favicon-size);
+	height: var(--favicon-size);
+	min-width: var(--favicon-size);
+	max-width: var(--favicon-size);
 	border-radius: 4px;
-	margin: 3px 4px;
+	margin: auto 4px;
 }
 .website-icon.icon-bookmark-overlay {
 	background-image: url(icons/defaultFaviconOverlay.svg);
@@ -42,21 +61,21 @@ body {
 	text-decoration: none;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	line-height: 24px;
+	line-height: var(--bookmark-height);
 }
 .bookmark-tag {
-	line-height: 24px;
+	line-height: var(--bookmark-height);
 	border-radius: 2px;
 	border: 1px solid #a7c391;
 	background-color: #e2efdc;
-	margin: 4px 2px;
-	padding: 0px 2px;
-	font-size: 12px;
+	margin: auto 2px;
+	padding: var(--tag-padding);
+	font-size: var(--tag-font-size);
 	font-weight: bold;
 	color: #87a478;
 	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 1px 0 rgba(0,0,0,0.05);
 	text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-	line-height: 16px;
+	line-height: var(--tag-font-size);
 	visibility: visible;
 	background-clip: padding-box;
 	background-origin: border-box;
@@ -69,7 +88,7 @@ body {
 
 /* Toolbar based on RSS Feed Reader Style */
 #toolbar {
-	height: 34px;
+	height: var(--toolbar-height);
 	background: rgb(250,250,255);
 	background: linear-gradient(to bottom, rgba(250,250,255,1) 0%,rgba(217,218,219,1) 100%);
 	box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset;
@@ -94,8 +113,8 @@ body {
 	display: inline-block;
 	zoom: 1;
 	border-left: 1px solid #c7c8c9;
-	height: 34px;
-	line-height: 34px;
+	height: var(--toolbar-height);
+	line-height: var(--toolbar-height);
 	font-size: 13px;
 }
 
@@ -104,7 +123,7 @@ body {
 	font-size: inherit;
 	font-family: inherit;
 	float: left;
-	min-width: 34px;
+	min-width: var(--toolbar-height);
 	border-right: 1px solid #c7c8c9;
 	cursor: pointer;
 	height: 100%;

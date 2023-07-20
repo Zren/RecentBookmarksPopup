@@ -3,7 +3,6 @@
 	<link rel="stylesheet" type="text/css" href="popup.css">
 </head>
 <body>
-
 <div id="app">
 	<div id="bookmarkList"></div>
 	<div id="toolbar">
@@ -17,8 +16,6 @@
 		</div>
 	</div>
 </div>
-
-
 <template id="bookmarkListItem">
 	<a href="{{url}}" class="bookmarks-item" role="listitem" aria-label="{{title}}" data-id="{{id}}">
 		<div class="website-icon favicon"></div>
@@ -27,7 +24,6 @@
 			style="color: {{tagColorStart}} 40%); background-color: {{tagColorStart}} 80%); border-color: {{tagColorStart}} 70%);">{{tag}}</div>
 	</a>
 </template>
-
 <script src="popup.js"></script>
 </body>
 </html>

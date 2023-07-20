@@ -63,6 +63,7 @@ body {
 }
 
 #bookmarkList {
+	height: calc(2 * var(--bookmarkListPadding) + var(--numVisibleBookmarks) * var(--bookmarkHeight));
 	max-height: calc(600px - var(--toolbarHeight) - var(--bookmarkHeight));
 	overflow-y: auto;
 	padding: var(--bookmarkListPadding);

@@ -219,9 +219,15 @@ function getArchiveFolder(callback) {
 var onBookmarkItemClick = function(e) {
 	var bookmarkId = this.getAttribute('data-id')
 	if (state.mode == 'open') {
-		chrome.tabs.create({
-			url: this.href
-		});
+		if (isFirefox) {
+			// Firefox opens the link in a new tab so we don't need to do it manually.
+			return
+		} else { // isChrome
+			// Chrome needs to create the tab
+			chrome.tabs.create({
+				url: this.href
+			})
+		}
 	} else if (state.mode == 'archive') {
 		getArchiveFolder(function(bookmarkTreeNode) {
 			console.log('move', bookmarkId, bookmarkTreeNode.id)

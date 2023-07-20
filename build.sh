@@ -14,6 +14,7 @@ if [ -f "$zipFilename" ]; then
 	rm "$zipFilename"
 fi
 (cd ./src && zip \
+	-x "darkmodeicon.js" \
 	-x "icons/rating*.png" \
 	-x "icons/rating*.svg" \
 	-r "./../${zipFilename}" \

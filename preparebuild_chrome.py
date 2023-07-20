@@ -7,6 +7,11 @@ with open('./src/manifest.json', 'r') as fin:
 	manifest = json.load(fin)
 
 del manifest['background']
+manifest['background'] = {
+	"scripts": [
+		"darkmodeicon.js"
+	]
+}
 
 if 'tabs' in manifest['permissions']:
 	manifest['permissions'].remove('tabs')

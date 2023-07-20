@@ -10,7 +10,8 @@
 	],
 	"background": {
 		"scripts": [
-			"faviconcacher.js"
+			"faviconcacher.js",
+			"darkmodeicon.js"
 		]
 	},
 	"browser_action": {

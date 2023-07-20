@@ -6,6 +6,7 @@ import json
 with open('./src/manifest.json', 'r') as fin:
 	manifest = json.load(fin)
 
+del manifest['background']
 manifest['background'] = {
 	"scripts": [
 		"faviconcacher.js"

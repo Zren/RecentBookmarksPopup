@@ -1,21 +1,55 @@
 html, body { margin: 0; padding: 0; }
 
 :root {
-	--toolbar-height: 34px;
-	--bookmark-height: 24px;
-	--favicon-size: 20px;
-	--tag-font-size: 12px;
-	--tag-padding: 2px;
+	--toolbarHeight: 34px;
+	--toolbarFontSize: 13px;
+	--bookmarkHeight: 24px;
+	--bookmarkFontSize: 14px;
+	--faviconSize: 16px;
+	--tagFontSize: 12px;
+	--tagPadding: 2px;
+}
+:root {
+	--backgroundColor: #fff;
+	--textColor: rgb(21,20,26);
+	--themeLightness: 100%;
+	--themeShadowLightness: 0%;
+	--bookmarkHoverBGColor: color-mix(in srgb, var(--backgroundColor), var(--textColor) 10%);
+	--toolbarBGColor1: rgb(250, 250, 255);
+	--toolbarBGColor2: rgb(217, 218, 219);
+	--toolbarBGShadow: hsla(0, 0%, var(--themeLightness), 0.2);
+	--toolbarTabShadow: hsla(0, 0%, var(--themeLightness), 0.5);
+	--toolbarOutlineColor: rgb(191, 191, 191);
+	--toolbarTabSepratorColor: rgb(199, 200, 201);
+	--toolbarHoverBGColor: transparent;
+	--toolbarHoverBorderColor1: hsla(0, 0%, var(--themeShadowLightness), 0.1);
+	--toolbarHoverBorderColor2: hsla(0, 0%, var(--themeShadowLightness), 0.2);
+	--toolbarActiveBGColor1: hsla(0, 0%, var(--themeShadowLightness), 0.12941176);
+	--toolbarActiveBGColor2: hsla(0, 0%, var(--themeShadowLightness), 0.11764705);
+}
+@media(prefers-color-scheme: dark) {
+	:root {
+		--backgroundColor: rgb(66,65,77);
+		--textColor: rgb(251,251,254);
+		--themeLightness: 0%;
+		--themeShadowLightness: 60%;
+		--toolbarBGColor1: rgb(43, 42, 51);
+		--toolbarBGColor2: rgb(20, 20, 28);
+		--toolbarOutlineColor: hsl(240, 5%, 5%);
+		--toolbarTabSepratorColor: hsl(240, 5%, 5%);
+		--toolbarHoverBGColor: hsla(0, 0%, var(--themeShadowLightness), 0.3);
+	}
 }
 * {
 	box-sizing: border-box;
 }
-
 body {
 	width: 390px;
-	min-height: var(--toolbar-height);
+	min-height: var(--toolbarHeight);
 	display: flex;
-	overflow-y: hidden;
+	background-color: var(--backgroundColor);
+	color: var(--textColor);
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Ubuntu', 'Helvetica Neue', sans-serif;
 }
 
 #app {
@@ -25,28 +59,29 @@ body {
 }
 
 #bookmarkList {
-	max-height: calc(600px - var(--toolbar-height) - var(--bookmark-height));
+	max-height: calc(600px - var(--toolbarHeight) - var(--bookmarkHeight));
 	overflow-y: auto;
+	padding: 4px;
 }
 .bookmarks-item {
 	display: flex;
-	color: #111;
+	color: var(--textColor);
 	text-decoration: none;
 	position: relative;
 	left: 0;
 	height: initial;
 }
 .bookmarks-item:hover {
-	background: #ddd;
+	background: var(--bookmarkHoverBGColor);
 }
 .website-icon {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
-	width: var(--favicon-size);
-	height: var(--favicon-size);
-	min-width: var(--favicon-size);
-	max-width: var(--favicon-size);
+	width: var(--faviconSize);
+	height: var(--faviconSize);
+	min-width: var(--faviconSize);
+	max-width: var(--faviconSize);
 	border-radius: 4px;
 	margin: auto 4px;
 }
@@ -61,21 +96,22 @@ body {
 	text-decoration: none;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	line-height: var(--bookmark-height);
+	line-height: var(--bookmarkHeight);
+	font-size: var(--bookmarkFontSize);
 }
 .bookmark-tag {
-	line-height: var(--bookmark-height);
+	line-height: var(--bookmarkHeight);
 	border-radius: 2px;
 	border: 1px solid #a7c391;
 	background-color: #e2efdc;
 	margin: auto 2px;
-	padding: var(--tag-padding);
-	font-size: var(--tag-font-size);
+	padding: var(--tagPadding);
+	font-size: var(--tagFontSize);
 	font-weight: bold;
 	color: #87a478;
 	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 1px 0 rgba(0,0,0,0.05);
 	text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-	line-height: var(--tag-font-size);
+	line-height: var(--tagFontSize);
 	visibility: visible;
 	background-clip: padding-box;
 	background-origin: border-box;
@@ -95,11 +131,11 @@ body {
 
 /* Toolbar based on RSS Feed Reader Style */
 #toolbar {
-	height: var(--toolbar-height);
-	background: rgb(250,250,255);
-	background: linear-gradient(to bottom, rgba(250,250,255,1) 0%,rgba(217,218,219,1) 100%);
-	box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset;
-	border-top: 1px solid #bfbfbf;
+	height: var(--toolbarHeight);
+	background: var(--toolbarBGColor1);
+	background: linear-gradient(to bottom, var(--toolbarBGColor1) 0%, var(--toolbarBGColor2) 100%);
+	box-shadow: 0 1px 0 var(--toolbarBGShadow) inset;
+	border-top: 1px solid var(--toolbarOutlineColor);
 	position: relative;
 	text-align: center;
 }
@@ -117,32 +153,39 @@ body {
 }
 
 #toolbar .tab-group {
+	--toolbarTabHeight: calc(var(--toolbarHeight) - 1px);
 	display: inline-block;
-	zoom: 1;
-	border-left: 1px solid #c7c8c9;
-	height: var(--toolbar-height);
-	line-height: var(--toolbar-height);
-	font-size: 13px;
+	border-left: 1px solid var(--toolbarTabSepratorColor);
+	height: var(--toolbarTabHeight);
+	line-height: var(--toolbarTabHeight);
+	font-size: var(--toolbarFontSize);
 }
 
 #toolbar .tab-group button.tab {
+	color: var(--textColor);
+	background: transparent;
 	border: none;
 	font-size: inherit;
 	font-family: inherit;
 	float: left;
-	min-width: var(--toolbar-height);
-	border-right: 1px solid #c7c8c9;
+	min-width: var(--toolbarHeight);
+	border-right: 1px solid var(--toolbarTabSepratorColor);
 	cursor: pointer;
 	height: 100%;
 	padding: 0 4px;
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+	box-shadow: inset 0 1px 0 var(--toolbarTabShadow);
 	font-weight: bold;
 	user-select: none;
 }
+#toolbar .tab-group button.tab[disabled] {
+	opacity: 0.5;
+	background-color: transparent;
+}
 
-#toolbar .tab-group button.tab:hover {
-	border: 1px solid rgba(0,0,0,0.1);
-	border-right: 1px solid rgba(0,0,0,0.2);
+#toolbar .tab-group button.tab:hover:not([disabled]) {
+	background: var(--toolbarHoverBGColor);
+	border: 1px solid var(--toolbarHoverBorderColor1);
+	border-right: 1px solid var(--toolbarHoverBorderColor2);
 	border-bottom: none;
 	border-top: none;
 	margin-left: -1px;
@@ -150,13 +193,13 @@ body {
 
 #toolbar .tab-group button.tab:active,
 #toolbar .tab-group button.tab.current {
-	background: rgb(222,222,226);
-	background: linear-gradient(to bottom, rgba(222,222,226,1) 0%,rgba(225,225,228,1) 100%);
+	background: var(--toolbarActiveBGColor1);
+	background: linear-gradient(to bottom, var(--toolbarActiveBGColor1) 0%, var(--toolbarActiveBGColor2) 100%);
 	border: 1px solid rgba(0,0,0,0.15);
 	border-bottom: none;
 	border-top: none;
 	margin-left: -1px;
-	box-shadow: 1px 0px 0px 0px rgba(255,255,255,0.25), -1px 0px 0px 0px rgba(255,255,255,0.25), 0px 1px 0px 0px rgba(0,0,0,0.1) inset, 0 -1px 0 rgba(0,0,0,0.2);
+	box-shadow: 1px 0px 0px 0px hsla(0, 0%, var(--themeLightness), 0.25), -1px 0px 0px 0px hsla(0, 0%, var(--themeLightness), 0.25), 0px 1px 0px 0px rgba(0,0,0,0.1) inset, 0 -1px 0 rgba(0,0,0,0.2);
 }
 #toolbar .tab-group button.tab[data-mode="delete"].current {
 	background: #ee6644;

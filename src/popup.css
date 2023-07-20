@@ -110,22 +110,35 @@ body {
 	font-size: var(--tagFontSize);
 	font-weight: bold;
 	color: #87a478;
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 1px 0 rgba(0,0,0,0.05);
-	text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+	box-shadow: inset 0 1px 0 hsla(0, 0%, var(--tagShadowLightness), 0.5), 0 1px 0 hsla(0, 0%, 0%, 0.05);
+	text-shadow: 0 1px 0 hsla(0, 0%, var(--tagShadowLightness), 0.4);
 	line-height: var(--tagFontSize);
 	visibility: visible;
 	background-clip: padding-box;
 	background-origin: border-box;
 	opacity: 1;
 	transition: opacity 250ms, margin 250ms, visibility 250ms linear 0ms;
+	--tagHue: 99.5;
+	--tagSaturation: 19.5%;
+	--tagTextLightness: 40%;
+	--tagBGLightness: 80%;
+	--tagBorderLightness: 70%;
+	--tagShadowLightness: 100%;
+	color: hsl(var(--tagHue), var(--tagSaturation), var(--tagTextLightness));
+	background-color: hsl(var(--tagHue), var(--tagSaturation), var(--tagBGLightness));
+	border-color: hsl(var(--tagHue), var(--tagSaturation), var(--tagBorderLightness));
 }
-.bookmark-tag {
-	--tag-hue: 99.5;
-	--tag-saturation: 19.5%;
-	color: hsl(var(--tag-hue), var(--tag-saturation), 40%);
-	background-color: hsl(var(--tag-hue), var(--tag-saturation), 80%);
-	border-color: hsl(var(--tag-hue), var(--tag-saturation), 70%);
+@media(prefers-color-scheme: dark) {
+	.bookmark-tag {
+		--tagTextLightness: 75%;
+		--tagBGLightness: 30%;
+		--tagBorderLightness: 20%;
+		--tagShadowLightness: 60%;
+		font-weight: normal;
+		text-shadow: none;
+	}
 }
+
 .bookmark-tag[aria-label=""] {
 	display: none;
 }

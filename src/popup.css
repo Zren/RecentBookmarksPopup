@@ -3,6 +3,8 @@ html, body { margin: 0; padding: 0; }
 :root {
 	--toolbarHeight: 34px;
 	--toolbarFontSize: 13px;
+	--bookmarkListPadding: 4px;
+	--numVisibleBookmarks: 20;
 	--bookmarkHeight: 24px;
 	--bookmarkFontSize: 14px;
 	--faviconSize: 16px;
@@ -51,6 +53,7 @@ body {
 	background-color: var(--backgroundColor);
 	color: var(--textColor);
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Ubuntu', 'Helvetica Neue', sans-serif;
+	height: calc(var(--toolbarHeight) + 2 * var(--bookmarkListPadding) + var(--numVisibleBookmarks) * var(--bookmarkHeight));
 }
 
 #app {
@@ -62,7 +65,7 @@ body {
 #bookmarkList {
 	max-height: calc(600px - var(--toolbarHeight) - var(--bookmarkHeight));
 	overflow-y: auto;
-	padding: 4px;
+	padding: var(--bookmarkListPadding);
 }
 #bookmarkList::-webkit-scrollbar {
 	display: none;

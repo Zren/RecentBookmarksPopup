@@ -82,6 +82,13 @@ body {
 	opacity: 1;
 	transition: opacity 250ms, margin 250ms, visibility 250ms linear 0ms;
 }
+.bookmark-tag {
+	--tag-hue: 99.5;
+	--tag-saturation: 19.5%;
+	color: hsl(var(--tag-hue), var(--tag-saturation), 40%);
+	background-color: hsl(var(--tag-hue), var(--tag-saturation), 80%);
+	border-color: hsl(var(--tag-hue), var(--tag-saturation), 70%);
+}
 .bookmark-tag[aria-label=""] {
 	display: none;
 }

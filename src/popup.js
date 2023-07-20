@@ -255,10 +255,13 @@ var renderBookmarksList = function() {
 		var bookmarkTreeNode = state.rootNode.children[i]
 		var url = new URL(bookmarkTreeNode.url)
 		var tagColorStart = ''
+		let tagHue = '0'
+		let tagSaturation = '0'
 		if (bookmarkTreeNode.parentId) {
 			var c = state.tagColorMap[bookmarkTreeNode.parentId]
 			if (c) {
-				tagColorStart = 'hsl(' + c.h + ', ' + c.s + '%,'
+				tagHue = c.h
+				tagSaturation = c.s + '%'
 			}
 		}
 		var e = template('#bookmarkListItem', {
@@ -267,7 +270,8 @@ var renderBookmarksList = function() {
 			url: bookmarkTreeNode.url,
 			host: url.host,
 			tag: state.tagMap[bookmarkTreeNode.parentId] || '',
-			tagColorStart: tagColorStart,
+			tagHue: tagHue,
+			tagSaturation: tagSaturation,
 		})
 		var favicon = e.querySelector('.favicon')
 		if (isChrome) {

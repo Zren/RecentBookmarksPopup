@@ -1,18 +1,6 @@
 var isFirefox = typeof browser !== 'undefined'
 var isChrome = typeof browser === 'undefined'
 
-var el = function(html) {
-	var e = document.createElement('div')
-	e.innerHTML = html
-	return e.removeChild(e.firstChild)
-}
-
-var encodeEntities = function(str) {
-	var e = document.createElement('div')
-	e.textContent = str
-	return e.innerHTML
-}
-
 var randomPastelColor = function() {
 	// Based on the Random Pastel code from StackOverflow
 	// https://stackoverflow.com/a/43195379/947742
@@ -44,16 +32,22 @@ var nextPastelHsl = function() {
 	return c
 }
 
-var template = function(templateSelector, kwargs) {
-	var template = document.querySelector('template' + templateSelector)
-	var templateHtml = template.innerHTML.trim()
-	var mustacheRegex = /\{\{(\w+?)\}\}/g
-	var mustacheReplacer = function(match, p1, offset, string) {
-		return typeof kwargs[p1] !== "undefined" ? kwargs[p1] : match
+function renderTemplate(templateSelector, propData) {
+	const template = document.querySelector('template' + templateSelector)
+	const el = template.content.firstElementChild.cloneNode(true)
+	for (const prop of propData) {
+		const selector = prop[0]
+		const key = prop[1]
+		const value = prop[2]
+		const target = el.matches(selector) ? el : el.querySelector(selector)
+		if (key.startsWith('attributes.')) {
+			const attrName = key.substr('attributes.'.length)
+			target.setAttribute(attrName, value)
+		} else {
+			target[key] = value
+		}
 	}
-	var templateRendered = templateHtml.replace(mustacheRegex, mustacheReplacer)
-	var cookedElement = el(templateRendered)
-	return cookedElement
+	return el
 }
 
 var cache = {
@@ -270,15 +264,18 @@ var renderBookmarksList = function() {
 				tagSaturation = c.s + '%'
 			}
 		}
-		var e = template('#bookmarkListItem', {
-			id: bookmarkTreeNode.id,
-			title: encodeEntities(bookmarkTreeNode.title),
-			url: bookmarkTreeNode.url,
-			host: url.host,
-			tag: state.tagMap[bookmarkTreeNode.parentId] || '',
-			tagHue: tagHue,
-			tagSaturation: tagSaturation,
-		})
+		const tagStyle = '--tagHue: ' + tagHue + '; --tagSaturation: ' + tagSaturation + ';'
+		const tag = state.tagMap[bookmarkTreeNode.parentId] || ''
+		var e = renderTemplate('#bookmarkListItem', [
+			['.bookmarks-item', 'attributes.data-id', bookmarkTreeNode.id],
+			['.bookmarks-item', 'attributes.href', bookmarkTreeNode.url],
+			['.bookmarks-item', 'attributes.aria-label', bookmarkTreeNode.title],
+			['.website-title', 'textContent', bookmarkTreeNode.title],
+			['.bookmark-tag', 'textContent', tag],
+			['.bookmark-tag', 'attributes.aria-label', tag],
+			['.bookmark-tag', 'attributes.style', tagStyle],
+		])
+
 		var favicon = e.querySelector('.favicon')
 		if (isChrome) {
 			favicon.style.backgroundImage = "-webkit-image-set(url('chrome://favicon/size/16@1x/" + encodeURI(bookmarkTreeNode.url) + "') 1x, url('chrome://favicon/size/16@2x/" + encodeURI(bookmarkTreeNode.url) + "') 2x)"

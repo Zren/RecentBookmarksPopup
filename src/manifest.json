@@ -1,7 +1,7 @@
 {
-	"name": "Recent Bookmarks",
-	"version": "1",
-	"description": "List recent booksmarks",
+	"name": "Recent Bookmarks Popup",
+	"version": "1.0",
+	"description": "List recent booksmarks in a toolbar menu.",
 	"permissions": [
 		"bookmarks",
 		"storage",

@@ -64,6 +64,9 @@ body {
 	overflow-y: auto;
 	padding: 4px;
 }
+#bookmarkList::-webkit-scrollbar {
+	display: none;
+}
 .bookmarks-item {
 	display: flex;
 	color: var(--textColor);

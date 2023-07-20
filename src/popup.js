@@ -275,7 +275,7 @@ var renderBookmarksList = function() {
 		})
 		var favicon = e.querySelector('.favicon')
 		if (isChrome) {
-			favicon.style.backgroundImage = "-webkit-image-set(url('chrome://favicon/size/16@1x/" + encodeURI(bookmarkTreeNode.url) + "') 1x, url('chrome://favicon/size/16@2x/" + encodeURI(bookmarkTreeNode.url) + "') 2x);"
+			favicon.style.backgroundImage = "-webkit-image-set(url('chrome://favicon/size/16@1x/" + encodeURI(bookmarkTreeNode.url) + "') 1x, url('chrome://favicon/size/16@2x/" + encodeURI(bookmarkTreeNode.url) + "') 2x)"
 		} else { // isFirefox
 			var iconBgColor = hslFromHostname(url.hostname)
 			favicon.style.backgroundColor = iconBgColor

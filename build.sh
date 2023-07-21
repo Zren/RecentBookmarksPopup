@@ -17,7 +17,8 @@ fi
 	-x "darkmodeicon.js" \
 	-x "icons/rating*.png" \
 	-x "icons/rating*.svg" \
-	-r "./../${zipFilename}" \
+	-r \
+	"./../${zipFilename}" \
 	./* \
 )
 
@@ -38,7 +39,8 @@ fi
 	-x "faviconcacher.js" \
 	-x "icons/rating*.png" \
 	-x "icons/rating*.svg" \
-	-r "./../${zipFilename}" \
+	-r \
+	"./../${zipFilename}" \
 	./* \
 )
 

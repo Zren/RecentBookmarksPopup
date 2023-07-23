@@ -15,8 +15,8 @@ if [ -f "$zipFilename" ]; then
 fi
 (cd ./src && zip \
 	-x "darkmodeicon.js" \
-	-x "icons/rating*.png" \
-	-x "icons/rating*.svg" \
+	-x "icons/recentbookmarks-chrome*.png" \
+	-x "icons/recentbookmarks-chrome*.svg" \
 	-r \
 	"./../${zipFilename}" \
 	./* \
@@ -37,8 +37,8 @@ if [ -f "$zipFilename" ]; then
 fi
 (cd ./src && zip \
 	-x "faviconcacher.js" \
-	-x "icons/rating*.png" \
-	-x "icons/rating*.svg" \
+	-x "icons/recentbookmarks-firefox*.png" \
+	-x "icons/recentbookmarks-firefox*.svg" \
 	-r \
 	"./../${zipFilename}" \
 	./* \

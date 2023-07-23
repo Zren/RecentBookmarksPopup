@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+<svg
+   viewBox="0 0 16 16"
+   width="16"
+   height="16"
+   fill="context-fill"
+   fill-opacity="context-fill-opacity"
+   version="1.1"
+   id="svg134"
+   sodipodi:docname="recentbookmarks-firefox.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs138" />
+  <sodipodi:namedview
+     id="namedview136"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="45.254834"
+     inkscape:cx="7.9328542"
+     inkscape:cy="8.9493202"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg134" />
+  <path
+     id="path132"
+     style="fill:#5b5b66;fill-opacity:1"
+     d="M 8 0.5 C 7.5010005 0.5 7.0590467 0.79967234 6.8730469 1.2636719 L 5.5097656 4.6914062 L 5.0078125 5.0664062 L 1.3105469 5.3046875 A 1.205 1.205 0 0 0 0.23632812 6.140625 A 1.207 1.207 0 0 0 0.61523438 7.4492188 L 3.4746094 9.8242188 L 3.6464844 10.421875 L 2.7382812 13.986328 A 1.205 1.205 0 0 0 3.2011719 15.265625 C 3.6021715 15.557625 4.1365004 15.576547 4.5625 15.310547 L 7.6894531 13.333984 L 8.3105469 13.333984 L 11.4375 15.310547 A 1.213 1.213 0 0 0 12.796875 15.265625 C 13.200875 14.972625 13.382766 14.471328 13.259766 13.986328 L 12.349609 10.412109 L 12.529297 9.8203125 L 15.384766 7.4492188 C 15.768765 7.1302191 15.918672 6.6166245 15.763672 6.140625 C 15.609672 5.6656255 15.187453 5.3366875 14.689453 5.3046875 L 10.992188 5.0664062 L 10.490234 4.6914062 L 9.1269531 1.2636719 C 8.9409533 0.80067234 8.4989995 0.5 8 0.5 z M 8 4.359375 C 8.2769997 4.359375 8.5 4.5823753 8.5 4.859375 L 8.5 8.359375 L 12 8.359375 C 12.277 8.359375 12.5 8.5823753 12.5 8.859375 C 12.5 9.1363547 12.277 9.359375 12 9.359375 L 8 9.359375 C 7.7230003 9.359375 7.5 9.1363547 7.5 8.859375 L 7.5 4.859375 C 7.5 4.5823753 7.7230003 4.359375 8 4.359375 z " />
+</svg>

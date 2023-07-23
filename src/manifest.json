@@ -16,38 +16,38 @@
 	},
 	"browser_action": {
 		"default_title": "Recent Bookmarks",
-		"default_icon": "icons/recentbookmarks-32px.png",
+		"default_icon": "icons/recentbookmarks-firefox-32px.png",
 		"default_popup": "popup.html",
 		"theme_icons": [
 			{
-				"light": "icons/recentbookmarks-dark-16px.png",
-				"dark": "icons/recentbookmarks-16px.png",
+				"light": "icons/recentbookmarks-firefox-dark-16px.png",
+				"dark": "icons/recentbookmarks-firefox-16px.png",
 				"size": 16
 			},
 			{
-				"light": "icons/recentbookmarks-dark-32px.png",
-				"dark": "icons/recentbookmarks-32px.png",
+				"light": "icons/recentbookmarks-firefox-dark-32px.png",
+				"dark": "icons/recentbookmarks-firefox-32px.png",
 				"size": 32
 			},
 			{
-				"light": "icons/recentbookmarks-dark-48px.png",
-				"dark": "icons/recentbookmarks-48px.png",
+				"light": "icons/recentbookmarks-firefox-dark-48px.png",
+				"dark": "icons/recentbookmarks-firefox-48px.png",
 				"size": 48
 			},
 			{
-				"light": "icons/recentbookmarks-dark-64px.png",
-				"dark": "icons/recentbookmarks-64px.png",
+				"light": "icons/recentbookmarks-firefox-dark-64px.png",
+				"dark": "icons/recentbookmarks-firefox-64px.png",
 				"size": 64
 			}
 		]
 	},
 	"icons": {
-		"16": "icons/recentbookmarks-16px.png",
-		"32": "icons/recentbookmarks-32px.png",
-		"48": "icons/recentbookmarks-48px.png",
-		"64": "icons/recentbookmarks-64px.png",
-		"96": "icons/recentbookmarks-96px.png",
-		"128": "icons/recentbookmarks-128px.png"
+		"16": "icons/recentbookmarks-firefox-16px.png",
+		"32": "icons/recentbookmarks-firefox-32px.png",
+		"48": "icons/recentbookmarks-firefox-48px.png",
+		"64": "icons/recentbookmarks-firefox-64px.png",
+		"96": "icons/recentbookmarks-firefox-96px.png",
+		"128": "icons/recentbookmarks-firefox-128px.png"
 	},
 	"manifest_version": 2
 }

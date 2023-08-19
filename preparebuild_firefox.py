@@ -2,7 +2,7 @@
 
 import json
 
-# Overwrite with chrome changes
+# Overwrite with firefox changes
 with open('./src/manifest.json', 'r') as fin:
 	manifest = json.load(fin)
 

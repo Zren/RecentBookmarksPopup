@@ -8,19 +8,18 @@ with open('./src/manifest.json', 'r') as fin:
 
 manifest['manifest_version'] = 3
 
-if 'background' in manifest:
-	del manifest['background']
-	# manifest['background'] = {
-	# 	"scripts": [
-	# 		"darkmodeicon.js"
-	# 	]
-	# }
+manifest['background'] = {
+	'service_worker': 'serviceworker.js',
+}
 
 if 'tabs' in manifest['permissions']:
 	manifest['permissions'].remove('tabs')
 
 if 'favicon' not in manifest['permissions']:
 	manifest['permissions'].append('favicon')
+
+if 'offscreen' not in manifest['permissions']:
+	manifest['permissions'].append('offscreen')
 
 # v2 browser_action => v3 action
 if 'browser_action' in manifest:

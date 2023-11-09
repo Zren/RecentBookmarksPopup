@@ -12,23 +12,10 @@ var isChrome = typeof browser === 'undefined'
 if (isChrome) {
 	const prefersDarkQuery = window.matchMedia("(prefers-color-scheme: dark)")
 	function onThemeChange(e) {
-		console.log('prefersDarkQuery.change', prefersDarkQuery)
-		fetch('manifest.json').then((res) => res.json()).then(function(manifest) {
-			// console.log('manifest', manifest)
-			const theme_icons = manifest.browser_action.theme_icons
-			// console.log('theme_icons', theme_icons)
-			const iconThemeKey = prefersDarkQuery.matches ? 'light' : 'dark'
-			// console.log('iconThemeKey', iconThemeKey)
-			let iconPaths = {}
-			for (const icon of theme_icons) {
-				// console.log('icon', icon)
-				const sizeStr = '' + icon.size
-				iconPaths[sizeStr] = icon[iconThemeKey]
-			}
-			console.log('iconPaths', iconPaths)
-			chrome.action.setIcon({
-				path: iconPaths,
-			})
+		// console.log('prefersDarkQuery.change', prefersDarkQuery)
+		chrome.runtime.sendMessage({
+			type: 'themeChange',
+			theme: prefersDarkQuery.matches ? 'light' : 'dark',
 		})
 	}
 	prefersDarkQuery.addEventListener('change', onThemeChange)

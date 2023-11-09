@@ -14,7 +14,9 @@ if [ -f "$zipFilename" ]; then
 	rm "$zipFilename"
 fi
 (cd ./src && zip \
+	-x "darkmodeicon.html" \
 	-x "darkmodeicon.js" \
+	-x "serviceworker.js" \
 	-x "icons/recentbookmarks-chrome*.png" \
 	-x "icons/recentbookmarks-chrome*.svg" \
 	-r \

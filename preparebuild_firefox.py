@@ -17,6 +17,9 @@ manifest['background'] = {
 if 'favicon' in manifest['permissions']:
 	manifest['permissions'].remove('favicon')
 
+if 'offscreen' in manifest['permissions']:
+	manifest['permissions'].remove('offscreen')
+
 if 'tabs' not in manifest['permissions']:
 	manifest['permissions'].append('tabs')
 

@@ -6,7 +6,8 @@
 		"bookmarks",
 		"storage",
 		"tabs",
-		"favicon"
+		"favicon",
+		"offscreen"
 	],
 	"background": {
 		"scripts": [

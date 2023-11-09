@@ -247,6 +247,23 @@ var onBookmarkItemClick = function(e) {
 		alert('unknown state.mode: ' + state.mode)
 	}
 }
+
+function getFaviconURL(url, size) {
+	//--- Chrome Manifest v2
+	// return 'chrome://favicon/size/16@1x/' + encodeURI(url)
+	// return 'chrome://favicon/' + encodeURI(url)
+	//--- Chrome Manifest v3
+	// https://developer.chrome.com/docs/extensions/mv3/favicon/
+	const faviconUrl = new URL(chrome.runtime.getURL('/_favicon/'))
+	faviconUrl.searchParams.set('pageUrl', url)
+	faviconUrl.searchParams.set('size', size || '32')
+	return faviconUrl.toString()
+}
+
+function getFaviconImageSet(url) {
+	return "-webkit-image-set(url('" + getFaviconURL(url, 16) + "') 1x, url('" + getFaviconURL(url, 32) + "') 2x)"
+}
+
 var renderBookmarksList = function() {
 	var bookmarkList = document.getElementById('bookmarkList')
 	bookmarkList.innerHTML = '' // Clear children
@@ -278,7 +295,7 @@ var renderBookmarksList = function() {
 
 		var favicon = e.querySelector('.favicon')
 		if (isChrome) {
-			favicon.style.backgroundImage = "-webkit-image-set(url('chrome://favicon/size/16@1x/" + encodeURI(bookmarkTreeNode.url) + "') 1x, url('chrome://favicon/size/16@2x/" + encodeURI(bookmarkTreeNode.url) + "') 2x)"
+			favicon.style.backgroundImage = getFaviconImageSet(bookmarkTreeNode.url)
 		} else { // isFirefox
 			var iconBgColor = hslFromHostname(url.hostname)
 			favicon.style.backgroundColor = iconBgColor

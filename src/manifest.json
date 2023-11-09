@@ -6,7 +6,7 @@
 		"bookmarks",
 		"storage",
 		"tabs",
-		"chrome://favicon/"
+		"favicon"
 	],
 	"background": {
 		"scripts": [

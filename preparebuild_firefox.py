@@ -6,18 +6,25 @@ import json
 with open('./src/manifest.json', 'r') as fin:
 	manifest = json.load(fin)
 
+manifest['manifest_version'] = 2
+
 manifest['background'] = {
 	"scripts": [
 		"faviconcacher.js"
 	]
 }
 
-if 'chrome://favicon/' in manifest['permissions']:
-	manifest['permissions'].remove('chrome://favicon/')
+if 'favicon' in manifest['permissions']:
+	manifest['permissions'].remove('favicon')
 
 if 'tabs' not in manifest['permissions']:
 	manifest['permissions'].append('tabs')
 
+
+# v3 action => v2 browser_action
+if 'action' in manifest:
+	manifest['browser_action'] = manifest['action']
+	del manifest['action']
 
 # Icons
 oldToken = '-chrome-'

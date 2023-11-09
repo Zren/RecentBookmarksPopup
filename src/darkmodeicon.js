@@ -26,7 +26,7 @@ if (isChrome) {
 				iconPaths[sizeStr] = icon[iconThemeKey]
 			}
 			console.log('iconPaths', iconPaths)
-			chrome.browserAction.setIcon({
+			chrome.action.setIcon({
 				path: iconPaths,
 			})
 		})

@@ -20,6 +20,9 @@ if 'favicon' in manifest['permissions']:
 if 'offscreen' in manifest['permissions']:
 	manifest['permissions'].remove('offscreen')
 
+if 'storage' not in manifest['permissions']:
+	manifest['permissions'].append('storage')
+
 if 'tabs' not in manifest['permissions']:
 	manifest['permissions'].append('tabs')
 

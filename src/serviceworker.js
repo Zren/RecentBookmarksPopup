@@ -1,5 +1,6 @@
-function setTheme(iconThemeKey) {
-	console.log('iconThemeKey', iconThemeKey)
+function setTheme(theme) {
+	const iconThemeKey = theme === 'dark' ? 'light' : 'dark'
+	console.log('setTheme', theme, 'iconThemeKey', iconThemeKey)
 	fetch(chrome.runtime.getURL('manifest.json')).then((res) => res.json()).then(function(manifest) {
 		console.log('manifest', manifest)
 		const theme_icons = manifest.action.theme_icons
@@ -25,7 +26,7 @@ chrome.offscreen.createDocument({
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	console.log('serviceworker.onMessage', request, sender)
-	if (sender.url === chrome.runtime.getURL('darkmodeicon.html') && request.type === 'themeChange') {
+	if (request.type === 'themeChange') {
 		setTheme(request.theme)
 	}
 })

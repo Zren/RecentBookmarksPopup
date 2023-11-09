@@ -15,7 +15,7 @@ if (isChrome) {
 		// console.log('prefersDarkQuery.change', prefersDarkQuery)
 		chrome.runtime.sendMessage({
 			type: 'themeChange',
-			theme: prefersDarkQuery.matches ? 'light' : 'dark',
+			theme: prefersDarkQuery.matches ? 'dark' : 'light',
 		})
 	}
 	prefersDarkQuery.addEventListener('change', onThemeChange)

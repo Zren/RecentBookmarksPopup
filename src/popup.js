@@ -120,6 +120,10 @@ function hslFromHostname(urlHostname) {
 // so we use this JS media query and toggle body[lwt-newtab-brighttext] attribute.
 // https://github.com/mozilla/gecko-dev/blob/master/browser/base/content/contentTheme.js
 const prefersDarkQuery = window.matchMedia("(prefers-color-scheme: dark)")
+chrome.runtime.sendMessage({
+	type: 'themeChange',
+	theme: prefersDarkQuery.matches ? 'dark' : 'light',
+})
 
 function fixDarkFavIcon(hostname, favIconUrl) {
 	if (hostname == 'github.com') {

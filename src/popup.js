@@ -55,12 +55,14 @@ var cache = {
 }
 var state = {
 	mode: 'open',
-	numRecentBookmarks: 20, // 20 fits nicely without a scrollbar
+	numRecentBookmarks: 30, // 20 fits nicely without a scrollbar
 	tagMap: {},
 	tagColorMap: {},
 	rootNode: {
 		children: [],
 	},
+	fetchingBookmarks: false,
+	reachedEnd: false,
 }
 
 
@@ -85,12 +87,19 @@ var updateParentFolderTagMap = function() {
 	})
 }
 
-var updateBookmarksList = function() {
+var updateBookmarksList = function(callback) {
 	chrome.bookmarks.getRecent(state.numRecentBookmarks, function(bookmarkTreeNodes) {
 		state.rootNode.children = bookmarkTreeNodes
+		console.log('state.rootNode.children.length', state.rootNode.children.length, 'state.numRecentBookmarks', state.numRecentBookmarks, '<', state.rootNode.children.length < state.numRecentBookmarks)
+		if (state.rootNode.children.length < state.numRecentBookmarks) {
+			state.reachedEnd = true
+		}
 		updateParentFolderTagMap()
 		render()
 		fetchFavicons()
+		if (typeof callback === 'function') {
+			callback()
+		}
 	})
 }
 
@@ -165,7 +174,7 @@ function fetchFavicons(callback) {
 				stylesheet.insertRule(rule, stylesheet.cssRules.length)
 			}
 		}
-		if (callback) {
+		if (typeof callback === 'function') {
 			callback()
 		}
 	})
@@ -190,7 +199,7 @@ function slideAndRemove(bookmarkListItem, callback) {
 	}, duration)
 	setTimeout(function() {
 		adjustWindowSize()
-		if (typeof callback !== "undefined") {
+		if (typeof callback === 'function') {
 			callback()
 		}
 	}, duration+1)
@@ -317,8 +326,15 @@ function setMode(nextMode) {
 }
 
 function fetchMoreBookmarks() {
+	// console.log('fetchMoreBookmarks', 'state.fetchingBookmarks', state.fetchingBookmarks)
+	if (state.fetchingBookmarks || state.reachedEnd) {
+		return
+	}
+	state.fetchingBookmarks = true
 	state.numRecentBookmarks += 100
-	updateBookmarksList()
+	updateBookmarksList(function(){
+		state.fetchingBookmarks = false
+	})
 }
 
 function setupToolbar() {
@@ -335,20 +351,33 @@ function setupToolbar() {
 			archiveModeBtn.setAttribute('title', 'Create a folder named \"Archive\".')
 		}
 	})
-	document.querySelector('#toolbar .tab#fetch-more').addEventListener('click', fetchMoreBookmarks);
+}
+
+function setupBookmarkList() {
+	var bookmarkList = document.getElementById('bookmarkList')
+	bookmarkList.addEventListener('scroll', function(e){
+		// console.log(e)
+		const viewportHeight = bookmarkList.clientHeight
+		const scrollBottomY = bookmarkList.scrollTop + viewportHeight
+		const scrollThreshold = bookmarkList.scrollHeight - viewportHeight * 0.25
+		if (scrollBottomY >= scrollThreshold) {
+			fetchMoreBookmarks()
+		}
+	})
 }
 
 var doRender = function() {
-	console.log('doRender')
+	// console.log('doRender')
 	renderBookmarksList()
 }
 var render = function() {
-	console.log('render')
+	// console.log('render')
 	// requestAnimationFrame(doRender)
 	doRender()
 }
 var main = function() {
 	updateBookmarksList()
 	setupToolbar()
+	setupBookmarkList()
 }
 document.addEventListener('DOMContentLoaded', main);

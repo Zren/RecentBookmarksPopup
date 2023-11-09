@@ -65,11 +65,19 @@ body {
 #bookmarkList {
 	height: calc(2 * var(--bookmarkListPadding) + var(--numVisibleBookmarks) * var(--bookmarkHeight));
 	max-height: calc(600px - var(--toolbarHeight) - var(--bookmarkHeight));
-	overflow-y: auto;
+	overflow-y: scroll;
 	padding: var(--bookmarkListPadding);
+	scrollbar-width: thin; /* Firefox */
 }
-#bookmarkList::-webkit-scrollbar {
+#bookmarkList::-webkit-scrollbar { /* Chrome */
+	width: 0.4em;
+}
+#bookmarkList::-webkit-scrollbar-button {
 	display: none;
+}
+#bookmarkList::-webkit-scrollbar-thumb {
+	border-radius: 0.4em;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 .bookmarks-item {
 	display: flex;

@@ -31,7 +31,7 @@ echo "[Chrome]"
 python3 ./preparebuild_chrome.py
 
 # Zip
-zipFilename="${projectName}-chrome.crx"
+zipFilename="${projectName}-chrome.zip"
 if [ -f "$zipFilename" ]; then
 	rm "$zipFilename"
 fi

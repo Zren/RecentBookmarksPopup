@@ -2,6 +2,10 @@
 
 projectName="RecentBookmarksPopup"
 
+### Backup
+cp ./src/manifest.json ./manifest.json
+
+
 ### Firefox
 echo "[Firefox]"
 
@@ -46,5 +50,6 @@ fi
 	./* \
 )
 
-git checkout src/manifest.json
 
+### Restore
+mv ./manifest.json ./src/manifest.json

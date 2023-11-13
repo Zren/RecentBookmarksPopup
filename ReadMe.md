@@ -2,6 +2,7 @@
 
 This is a very simple extension that lists the most recent bookmarks.
 
+* **Chrome:** https://chrome.google.com/webstore/detail/recent-bookmarks-popup/pdgbmlhjjgaenhbmahiafcelnbbbopla
 * **Firefox:** https://addons.mozilla.org/en-CA/firefox/addon/recent-bookmarks-popup/
 
 ![](screenshots/Firefox-LightMode.png)

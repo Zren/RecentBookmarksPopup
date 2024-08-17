@@ -14,7 +14,7 @@ html, body { margin: 0; padding: 0; }
 	--tagPadding: 2px;
 }
 body.toolbar-hidden {
-	--toolbarHeight: 0;
+	--toolbarHeight: 0px;
 	--numVisibleBookmarks: 22;
 }
 :root {

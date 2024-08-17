@@ -5,6 +5,8 @@ html, body { margin: 0; padding: 0; }
 	--toolbarFontSize: 13px;
 	--bookmarkListPadding: 4px;
 	--numVisibleBookmarks: 20;
+	--sectionHeight: 18px;
+	--sectionFontSize: 12px;
 	--bookmarkHeight: 24px;
 	--bookmarkFontSize: 14px;
 	--faviconSize: 16px;
@@ -14,6 +16,8 @@ html, body { margin: 0; padding: 0; }
 :root {
 	--backgroundColor: #fff;
 	--textColor: rgb(21,20,26);
+	--sectionTextColor: rgb(128, 128, 128);
+	--sectionBackgroundColor: rgb(195, 195, 195);
 	--themeLightness: 100%;
 	--themeShadowLightness: 0%;
 	--bookmarkHoverBGColor: color-mix(in srgb, var(--backgroundColor), var(--textColor) 10%);
@@ -33,6 +37,8 @@ html, body { margin: 0; padding: 0; }
 	:root {
 		--backgroundColor: rgb(66,65,77);
 		--textColor: rgb(251,251,254);
+		--sectionTextColor: rgb(184, 184, 184);
+		--sectionBackgroundColor: rgb(85, 84, 95);
 		--themeLightness: 0%;
 		--themeShadowLightness: 60%;
 		--toolbarBGColor1: rgb(65, 64, 77);
@@ -79,16 +85,52 @@ body {
 	border-radius: 0.4em;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
+.bookmarks-section,
 .bookmarks-item {
 	display: flex;
-	color: var(--textColor);
 	text-decoration: none;
 	position: relative;
 	left: 0;
 	height: initial;
 }
+.bookmarks-section {
+	color: var(--sectionTextColor);
+	border-radius: 4px 4px 0 0;
+	transition: background 0.4s;
+}
+.bookmarks-section:not(:first-child) {
+	margin-top: 4px;
+}
+.bookmarks-section.expanded {
+	border-bottom: 1px solid var(--sectionBackgroundColor);
+	border-radius: 4px 4px 0 0;
+}
+.bookmarks-section.collapsed {
+	background: var(--sectionBackgroundColor);
+	border-bottom: 1px solid transparent;
+	border-radius: 4px 4px 4px 4px;
+}
+.bookmarks-section .section-toggle-icon:before {
+	content: "\25BE";
+}
+.bookmarks-section .section-toggle-icon {
+	transform: rotate(0deg);
+	transition: transform 0.4s;
+}
+.bookmarks-section .section-toggle-icon:before {
+	content: "\25BE";
+}
+.bookmarks-section.collapsed .section-toggle-icon {
+	transform: rotate(90deg);
+}
+.bookmarks-item {
+	color: var(--textColor);
+}
 .bookmarks-item:hover {
 	background: var(--bookmarkHoverBGColor);
+}
+.bookmarks-item.hidden {
+	display: none;
 }
 .website-icon {
 	background-position: center;
@@ -104,6 +146,7 @@ body {
 .website-icon.icon-bookmark-overlay {
 	background-image: url(icons/defaultFaviconOverlay.svg);
 }
+.section-title,
 .website-title {
 	-webkit-margin-start: 4px;
 	-webkit-margin-end: 4px;
@@ -112,8 +155,18 @@ body {
 	text-decoration: none;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+.section-title,
+.section-toggle-icon {
+	line-height: var(--sectionHeight);
+	font-size: var(--sectionFontSize);
+}
+.website-title {
 	line-height: var(--bookmarkHeight);
 	font-size: var(--bookmarkFontSize);
+}
+.section-toggle-icon {
+	margin-right: 4px;
 }
 .bookmark-tag {
 	line-height: var(--bookmarkHeight);

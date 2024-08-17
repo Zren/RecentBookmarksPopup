@@ -279,13 +279,48 @@ function getFaviconImageSet(url) {
 	return "-webkit-image-set(url('" + getFaviconURL(url, 16) + "') 1x, url('" + getFaviconURL(url, 32) + "') 2x)"
 }
 
+function onBookmarkSectionClick(e) {
+	let bookmarkDateStr = this.getAttribute('data-date')
+	if (this.classList.contains('expanded')) { // Collapse
+		this.classList.replace('expanded', 'collapsed')
+		let bookmarkItemList = document.querySelectorAll('.bookmarks-item[data-date="' + bookmarkDateStr + '"]')
+		bookmarkItemList.forEach(function(bookmarkItem){
+			bookmarkItem.classList.add('hidden')
+		})
+		checkBookmarkListScroll()
+	} else { // Expand
+		this.classList.replace('collapsed', 'expanded')
+		let bookmarkItemList = document.querySelectorAll('.bookmarks-item[data-date="' + bookmarkDateStr + '"]')
+		bookmarkItemList.forEach(function(bookmarkItem){
+			bookmarkItem.classList.remove('hidden')
+		})
+	}
+}
+
 var renderBookmarksList = function() {
 	var bookmarkList = document.getElementById('bookmarkList')
 	bookmarkList.innerHTML = '' // Clear children
-	
+
+	let lastDateStr = ''
 	for (var i = 0; i < state.rootNode.children.length; i++) {
 		var bookmarkTreeNode = state.rootNode.children[i]
 		var url = new URL(bookmarkTreeNode.url)
+
+		const bookmarkDate = new Date(bookmarkTreeNode.dateAdded)
+		const bookmarkDateStr = bookmarkDate.toISOString().substr(0, 10)
+		if (bookmarkDateStr != lastDateStr) {
+			let sectionTitle = bookmarkDateStr
+			let section = renderTemplate('#bookmarkListSection', [
+				['.bookmarks-section', 'attributes.data-date', bookmarkDateStr],
+				['.bookmarks-section', 'attributes.aria-label', sectionTitle],
+				['.section-title', 'textContent', sectionTitle],
+				['.section-title', 'attributes.title', sectionTitle],
+			])
+			section.addEventListener('click', onBookmarkSectionClick)
+			bookmarkList.appendChild(section)
+		}
+		lastDateStr = bookmarkDateStr
+
 		var tagColorStart = ''
 		let tagHue = '0'
 		let tagSaturation = '0'
@@ -300,6 +335,7 @@ var renderBookmarksList = function() {
 		const tag = state.tagMap[bookmarkTreeNode.parentId] || ''
 		var e = renderTemplate('#bookmarkListItem', [
 			['.bookmarks-item', 'attributes.data-id', bookmarkTreeNode.id],
+			['.bookmarks-item', 'attributes.data-date', bookmarkDateStr],
 			['.bookmarks-item', 'attributes.href', bookmarkTreeNode.url],
 			['.bookmarks-item', 'attributes.aria-label', bookmarkTreeNode.title],
 			['.website-title', 'textContent', bookmarkTreeNode.title],
@@ -359,17 +395,19 @@ function setupToolbar() {
 		}
 	})
 }
-
+function checkBookmarkListScroll() {
+	const viewportHeight = bookmarkList.clientHeight
+	const scrollBottomY = bookmarkList.scrollTop + viewportHeight
+	const scrollThreshold = bookmarkList.scrollHeight - viewportHeight * 0.25
+	if (scrollBottomY >= scrollThreshold) {
+		fetchMoreBookmarks()
+	}
+}
 function setupBookmarkList() {
 	var bookmarkList = document.getElementById('bookmarkList')
 	bookmarkList.addEventListener('scroll', function(e){
 		// console.log(e)
-		const viewportHeight = bookmarkList.clientHeight
-		const scrollBottomY = bookmarkList.scrollTop + viewportHeight
-		const scrollThreshold = bookmarkList.scrollHeight - viewportHeight * 0.25
-		if (scrollBottomY >= scrollThreshold) {
-			fetchMoreBookmarks()
-		}
+		checkBookmarkListScroll()
 	})
 }
 

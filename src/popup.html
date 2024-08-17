@@ -13,8 +13,14 @@
 		</div>
 	</div>
 </div>
+<template id="bookmarkListSection">
+	<a class="bookmarks-section expanded" aria-label="{{title}}"data-date="{{date}}">
+		<div class="section-title" title="{{title}}">{{title}}</div>
+		<div class="section-toggle-icon"></div>
+	</a>
+</template>
 <template id="bookmarkListItem">
-	<a href="{{url}}" class="bookmarks-item" role="listitem" aria-label="{{title}}" data-id="{{id}}">
+	<a href="{{url}}" class="bookmarks-item" role="listitem" aria-label="{{title}}" data-id="{{id}}" data-date="{{date}}">
 		<div class="website-icon favicon"></div>
 		<div class="website-title" title="{{title}} {{url}}">{{title}}</div>
 		<div class="bookmark-tag" aria-label="{{tag}}"

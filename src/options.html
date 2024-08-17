@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="options.css">
+</head>
+<body>
+	<form>
+		<h3>Grouping</h3>
+		<div class="settings-group">
+			<label>
+				<input type="checkbox" data-config-key="groupBookmarksByDate">
+				<span class="bold">Group bookmarks by date</span>
+			</label>
+			<p><em>Show bookmark date.</em></p>
+		</div>
+		<div class="settings-group">
+			<label>
+				<input type="checkbox" data-config-key="showRelativeDate">
+				<span class="bold">Use relative date</span>
+			</label>
+			<p><em>Use today / yesterday / X days ago.</em></p>
+		</div>
+		<h3>Toolbar</h3>
+		<div class="settings-group">
+			<label>
+				<input type="checkbox" data-config-key="showActionToolbar">
+				<span class="bold">Show bookmark action toolbar</span>
+			</label>
+			<p><em>Uncheck to hide the bottom toolbar in the popup.</em></p>
+		</div>
+	</form>
+
+	<script src="options.js"></script>
+</body>
+</html>

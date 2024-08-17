@@ -42,6 +42,10 @@
 			}
 		]
 	},
+	"options_ui": {
+		"page": "options.html",
+		"browser_style": true
+	},
 	"icons": {
 		"16": "icons/recentbookmarks-firefox-16px.png",
 		"32": "icons/recentbookmarks-firefox-32px.png",

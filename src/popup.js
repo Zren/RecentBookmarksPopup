@@ -96,7 +96,9 @@ var updateBookmarksList = function(callback) {
 		}
 		updateParentFolderTagMap()
 		render()
-		fetchFavicons()
+		if (isFirefox) {
+			fetchFavicons()
+		}
 		if (typeof callback === 'function') {
 			callback()
 		}

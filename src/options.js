@@ -4,9 +4,12 @@ const configDefaults = {
 	showActionToolbar: true,
 }
 // let config = configDefaults
-// function loadConfig() {
+// function loadConfig(callback) {
 // 	chrome.storage.local.get(configDefaults, function(items) {
 // 		config = items
+// 		if (typeof callback === 'function') {
+// 			callback()
+// 		}
 // 	})
 // }
 

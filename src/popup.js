@@ -71,9 +71,12 @@ const configDefaults = {
 	showActionToolbar: true,
 }
 let config = configDefaults
-function loadConfig() {
+function loadConfig(callback) {
 	chrome.storage.local.get(configDefaults, function(items) {
 		config = items
+		if (typeof callback === 'function') {
+			callback()
+		}
 	})
 }
 
@@ -406,6 +409,9 @@ function setupToolbar() {
 			archiveModeBtn.setAttribute('title', 'Create a folder named \"Archive\".')
 		}
 	})
+	if (!config.showActionToolbar) {
+		document.body.classList.add('toolbar-hidden')
+	}
 }
 function checkBookmarkListScroll() {
 	const viewportHeight = bookmarkList.clientHeight
@@ -433,9 +439,10 @@ var render = function() {
 	doRender()
 }
 var main = function() {
-	loadConfig()
-	updateBookmarksList()
-	setupToolbar()
-	setupBookmarkList()
+	loadConfig(function(){
+		updateBookmarksList()
+		setupToolbar()
+		setupBookmarkList()
+	})
 }
 document.addEventListener('DOMContentLoaded', main);

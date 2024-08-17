@@ -13,6 +13,10 @@ html, body { margin: 0; padding: 0; }
 	--tagFontSize: 12px;
 	--tagPadding: 2px;
 }
+body.toolbar-hidden {
+	--toolbarHeight: 0;
+	--numVisibleBookmarks: 22;
+}
 :root {
 	--backgroundColor: #fff;
 	--textColor: rgb(21,20,26);
@@ -220,6 +224,10 @@ body {
 	border-top: 1px solid var(--toolbarOutlineColor);
 	position: relative;
 	text-align: center;
+}
+
+body.toolbar-hidden #toolbar {
+	display: none;
 }
 
 #toolbar > .left-group {

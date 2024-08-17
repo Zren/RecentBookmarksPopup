@@ -16,7 +16,7 @@
 <template id="bookmarkListItem">
 	<a href="{{url}}" class="bookmarks-item" role="listitem" aria-label="{{title}}" data-id="{{id}}">
 		<div class="website-icon favicon"></div>
-		<div class="website-title" title="{{title}}">{{title}}</div>
+		<div class="website-title" title="{{title}} {{url}}">{{title}}</div>
 		<div class="bookmark-tag" aria-label="{{tag}}"
 			style="--tagHue: {{tagHue}}; --tagSaturation: {{tagSaturation}};">{{tag}}</div>
 	</a>

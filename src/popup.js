@@ -301,7 +301,7 @@ var renderBookmarksList = function() {
 			['.bookmarks-item', 'attributes.href', bookmarkTreeNode.url],
 			['.bookmarks-item', 'attributes.aria-label', bookmarkTreeNode.title],
 			['.website-title', 'textContent', bookmarkTreeNode.title],
-			['.website-title', 'attributes.title', bookmarkTreeNode.title],
+			['.website-title', 'attributes.title', bookmarkTreeNode.title + '\n' + bookmarkTreeNode.url],
 			['.bookmark-tag', 'textContent', tag],
 			['.bookmark-tag', 'attributes.aria-label', tag],
 			['.bookmark-tag', 'attributes.style', tagStyle],

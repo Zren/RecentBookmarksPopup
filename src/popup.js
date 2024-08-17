@@ -65,6 +65,18 @@ var state = {
 	reachedEnd: false,
 }
 
+const configDefaults = {
+	groupBookmarksByDate: false,
+	showRelativeDate: true,
+	showActionToolbar: true,
+}
+let config = configDefaults
+function loadConfig() {
+	chrome.storage.local.get(configDefaults, function(items) {
+		config = items
+	})
+}
+
 
 
 var updateParentFolderTagMap = function() {
@@ -308,7 +320,7 @@ var renderBookmarksList = function() {
 
 		const bookmarkDate = new Date(bookmarkTreeNode.dateAdded)
 		const bookmarkDateStr = bookmarkDate.toISOString().substr(0, 10)
-		if (bookmarkDateStr != lastDateStr) {
+		if (config.groupBookmarksByDate && bookmarkDateStr != lastDateStr) {
 			let sectionTitle = bookmarkDateStr
 			let section = renderTemplate('#bookmarkListSection', [
 				['.bookmarks-section', 'attributes.data-date', bookmarkDateStr],
@@ -421,6 +433,7 @@ var render = function() {
 	doRender()
 }
 var main = function() {
+	loadConfig()
 	updateBookmarksList()
 	setupToolbar()
 	setupBookmarkList()

@@ -47,3 +47,4 @@ for iconSize in manifest['icons'].keys():
 
 with open('./src/manifest.json', 'w') as fout:
 	json.dump(manifest, fout, indent='\t')
+	fout.write('\n')

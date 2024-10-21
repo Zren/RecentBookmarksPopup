@@ -395,6 +395,9 @@ function fetchMoreBookmarks() {
 	})
 }
 
+function updateToolbar() {
+	document.body.classList.toggle('toolbar-hidden', !config.showActionToolbar)
+}
 function setupToolbar() {
 	for (var e of document.querySelectorAll('#toolbar .tab[data-mode]')) {
 		e.addEventListener('click', function(e) {
@@ -409,9 +412,7 @@ function setupToolbar() {
 			archiveModeBtn.setAttribute('title', 'Create a folder named \"Archive\".')
 		}
 	})
-	if (!config.showActionToolbar) {
-		document.body.classList.add('toolbar-hidden')
-	}
+	updateToolbar()
 }
 function checkBookmarkListScroll() {
 	const viewportHeight = bookmarkList.clientHeight
@@ -439,10 +440,14 @@ var render = function() {
 	doRender()
 }
 var main = function() {
+	updateBookmarksList()
+	setupToolbar()
+	setupBookmarkList()
 	loadConfig(function(){
-		updateBookmarksList()
-		setupToolbar()
-		setupBookmarkList()
+		updateToolbar()
+		if (configDefaults.groupBookmarksByDate != config.groupBookmarksByDate) {
+			render()
+		}
 	})
 }
 document.addEventListener('DOMContentLoaded', main);

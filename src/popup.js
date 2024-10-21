@@ -53,10 +53,7 @@ function timeAgo(input) {
 		}
 	}
 }
-
-function renderTemplate(templateSelector, propData) {
-	const template = document.querySelector('template' + templateSelector)
-	const el = template.content.firstElementChild.cloneNode(true)
+function updateElement(el, propData) {
 	for (const prop of propData) {
 		const selector = prop[0]
 		const key = prop[1]
@@ -69,6 +66,13 @@ function renderTemplate(templateSelector, propData) {
 			target[key] = value
 		}
 	}
+}
+function renderTemplate(templateSelector, propData) {
+	const template = document.querySelector('template' + templateSelector)
+	const el = template.content.firstElementChild.cloneNode(true)
+	if (typeof propData !== 'undefined') {
+		updateElement(el, propData)
+	}
 	return el
 }
 
@@ -77,6 +81,7 @@ var cache = {
 }
 var state = {
 	mode: 'open',
+	renderedBookmarkIndex: -1,
 	numRecentBookmarks: 30, // 20 fits nicely without a scrollbar
 	tagMap: {},
 	tagColorMap: {},
@@ -124,7 +129,7 @@ var updateParentFolderTagMap = function() {
 	})
 }
 
-var updateBookmarksList = function(callback) {
+var loadBookmarksList = function(callback) {
 	chrome.bookmarks.getRecent(state.numRecentBookmarks, function(bookmarkTreeNodes) {
 		state.rootNode.children = bookmarkTreeNodes
 		console.log('state.rootNode.children.length', state.rootNode.children.length, 'state.numRecentBookmarks', state.numRecentBookmarks, '<', state.rootNode.children.length < state.numRecentBookmarks)
@@ -281,7 +286,7 @@ var onBookmarkItemClick = function(e) {
 				parentId: bookmarkTreeNode.id
 			}, function(result) {
 				console.log('move.result', result)
-				updateBookmarksList()
+				loadBookmarksList()
 			})
 		})
 		e.preventDefault()
@@ -290,7 +295,7 @@ var onBookmarkItemClick = function(e) {
 		var bookmarkListItem = this
 		chrome.bookmarks.remove(bookmarkId, function() {
 			slideAndRemove(bookmarkListItem, function() {
-				updateBookmarksList()
+				loadBookmarksList()
 			})
 		})
 		e.preventDefault()
@@ -336,16 +341,20 @@ function onBookmarkSectionClick(e) {
 
 var renderBookmarksList = function() {
 	var bookmarkList = document.getElementById('bookmarkList')
-	bookmarkList.innerHTML = '' // Clear children
+
+	// bookmarkList.innerHTML = '' // Clear children
+	// state.renderedBookmarkIndex = 0
 
 	let lastDateStr = ''
 	for (var i = 0; i < state.rootNode.children.length; i++) {
 		var bookmarkTreeNode = state.rootNode.children[i]
 		var url = new URL(bookmarkTreeNode.url)
 
+		const isAlreadyRendered = i <= state.renderedBookmarkIndex
+
 		const bookmarkDate = new Date(bookmarkTreeNode.dateAdded)
 		const bookmarkDateStr = bookmarkDate.toISOString().substr(0, 10)
-		if (config.groupBookmarksByDate && bookmarkDateStr != lastDateStr) {
+		if (!isAlreadyRendered && bookmarkDateStr != lastDateStr) {
 			let sectionTitle = bookmarkDateStr
 			if (config.showRelativeDate) {
 				sectionTitle = timeAgo(bookmarkDateStr)
@@ -373,7 +382,15 @@ var renderBookmarksList = function() {
 		}
 		const tagStyle = '--tagHue: ' + tagHue + '; --tagSaturation: ' + tagSaturation + ';'
 		const tag = state.tagMap[bookmarkTreeNode.parentId] || ''
-		var e = renderTemplate('#bookmarkListItem', [
+
+		let e
+		if (isAlreadyRendered) {
+			e = bookmarkList.querySelector('.bookmarks-item[data-id="' + bookmarkTreeNode.id + '"')
+		} else {
+			e = renderTemplate('#bookmarkListItem')
+		}
+
+		updateElement(e, [
 			['.bookmarks-item', 'attributes.data-id', bookmarkTreeNode.id],
 			['.bookmarks-item', 'attributes.data-date', bookmarkDateStr],
 			['.bookmarks-item', 'attributes.href', bookmarkTreeNode.url],
@@ -394,8 +411,13 @@ var renderBookmarksList = function() {
 			favicon.classList.add('icon-bookmark-overlay')
 			favicon.setAttribute('data-hostname', url.hostname)
 		}
-		e.addEventListener('click', onBookmarkItemClick)
-		bookmarkList.appendChild(e)
+		if (!isAlreadyRendered) {
+			e.addEventListener('click', onBookmarkItemClick)
+			bookmarkList.appendChild(e)
+		}
+		if (i > state.renderedBookmarkIndex) {
+			state.renderedBookmarkIndex = i
+		}
 	}
 }
 
@@ -415,11 +437,14 @@ function fetchMoreBookmarks() {
 	}
 	state.fetchingBookmarks = true
 	state.numRecentBookmarks += 100
-	updateBookmarksList(function(){
+	loadBookmarksList(function(){
 		state.fetchingBookmarks = false
 	})
 }
 
+function updateBookmarksList() {
+	document.body.classList.toggle('bookmarks-section-hidden', !config.groupBookmarksByDate)
+}
 function updateToolbar() {
 	document.body.classList.toggle('toolbar-hidden', !config.showActionToolbar)
 }
@@ -465,14 +490,12 @@ var render = function() {
 	doRender()
 }
 var main = function() {
-	updateBookmarksList()
+	loadBookmarksList()
 	setupToolbar()
 	setupBookmarkList()
 	loadConfig(function(){
+		updateBookmarksList()
 		updateToolbar()
-		if (configDefaults.groupBookmarksByDate != config.groupBookmarksByDate) {
-			render()
-		}
 	})
 }
 document.addEventListener('DOMContentLoaded', main)

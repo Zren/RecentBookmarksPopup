@@ -127,6 +127,9 @@ body {
 .bookmarks-section.collapsed .section-toggle-icon {
 	transform: rotate(90deg);
 }
+body.bookmarks-section-hidden .bookmarks-section {
+	display: none !important;
+}
 .bookmarks-item {
 	color: var(--textColor);
 }

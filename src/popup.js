@@ -131,6 +131,7 @@ var updateParentFolderTagMap = function() {
 
 var loadBookmarksList = function(callback) {
 	chrome.bookmarks.getRecent(state.numRecentBookmarks, function(bookmarkTreeNodes) {
+		clearBookmarksList()
 		state.rootNode.children = bookmarkTreeNodes
 		console.log('state.rootNode.children.length', state.rootNode.children.length, 'state.numRecentBookmarks', state.numRecentBookmarks, '<', state.rootNode.children.length < state.numRecentBookmarks)
 		if (state.rootNode.children.length < state.numRecentBookmarks) {
@@ -339,18 +340,20 @@ function onBookmarkSectionClick(e) {
 	}
 }
 
+function clearBookmarksList() {
+	var bookmarkList = document.getElementById('bookmarkList')
+	bookmarkList.innerHTML = '' // Clear children
+	state.renderedBookmarkIndex = -1
+}
 var renderBookmarksList = function() {
 	var bookmarkList = document.getElementById('bookmarkList')
-
-	// bookmarkList.innerHTML = '' // Clear children
-	// state.renderedBookmarkIndex = 0
 
 	let lastDateStr = ''
 	for (var i = 0; i < state.rootNode.children.length; i++) {
 		var bookmarkTreeNode = state.rootNode.children[i]
 		var url = new URL(bookmarkTreeNode.url)
 
-		const isAlreadyRendered = i <= state.renderedBookmarkIndex
+		const isAlreadyRendered = i <= state.renderedBookmarkIndex && state.renderedBookmarkIndex >= 0
 
 		const bookmarkDate = new Date(bookmarkTreeNode.dateAdded)
 		const bookmarkDateStr = bookmarkDate.toISOString().substr(0, 10)

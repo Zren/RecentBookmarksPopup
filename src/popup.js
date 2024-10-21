@@ -290,7 +290,7 @@ var onBookmarkItemClick = function(e) {
 			})
 		})
 		e.preventDefault()
-		e.stopPropagation()()
+		e.stopPropagation()
 	} else if (state.mode == 'delete') {
 		var bookmarkListItem = this
 		chrome.bookmarks.remove(bookmarkId, function() {
@@ -299,7 +299,7 @@ var onBookmarkItemClick = function(e) {
 			})
 		})
 		e.preventDefault()
-		e.stopPropagation()()
+		e.stopPropagation()
 	} else {
 		alert('unknown state.mode: ' + state.mode)
 	}

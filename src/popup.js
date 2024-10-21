@@ -403,7 +403,6 @@ var renderBookmarksList = function() {
 		} else {
 			el = renderTemplate('#bookmarkListItem')
 		}
-		console.log('i', i, 'isAlreadyRendered', isAlreadyRendered, 'el', el)
 
 		updateElement(el, [
 			['.bookmarks-item', 'attributes.data-id', bookmarkTreeNode.id],

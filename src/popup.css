@@ -248,7 +248,6 @@ body.toolbar-hidden #toolbar {
 #toolbar .tab-group {
 	--toolbarTabHeight: calc(var(--toolbarHeight) - 1px);
 	display: inline-block;
-	border-left: 1px solid var(--toolbarTabSepratorColor);
 	height: var(--toolbarTabHeight);
 	line-height: var(--toolbarTabHeight);
 	font-size: var(--toolbarFontSize);
@@ -262,7 +261,7 @@ body.toolbar-hidden #toolbar {
 	font-family: inherit;
 	float: left;
 	min-width: var(--toolbarHeight);
-	border-right: 1px solid var(--toolbarTabSepratorColor);
+	border-left: 1px solid var(--toolbarTabSepratorColor);
 	cursor: pointer;
 	height: 100%;
 	padding: 0 4px;
@@ -270,28 +269,29 @@ body.toolbar-hidden #toolbar {
 	font-weight: bold;
 	user-select: none;
 }
+#toolbar .tab-group button.tab:last-child {
+	border-right: 1px solid var(--toolbarTabSepratorColor);
+}
 #toolbar .tab-group button.tab[disabled] {
 	opacity: 0.5;
 	background-color: transparent;
 }
-
 #toolbar .tab-group button.tab:hover:not([disabled]) {
 	background: var(--toolbarHoverBGColor);
-	border: 1px solid var(--toolbarHoverBorderColor1);
-	border-right: 1px solid var(--toolbarHoverBorderColor2);
-	border-bottom: none;
-	border-top: none;
-	margin-left: -1px;
+	border-left-color: var(--toolbarHoverBorderColor2);
+}
+#toolbar .tab-group button.tab:hover:not([disabled]):last-child {
+	border-right: 1px solid var(--toolbarHoverBorderColor1) !important;
+}
+#toolbar .tab-group button.tab:hover:not([disabled]) + button.tab {
+	border-left-color: var(--toolbarHoverBorderColor1) !important;
 }
 
 #toolbar .tab-group button.tab:active:not([disabled]),
 #toolbar .tab-group button.tab.current {
 	background: var(--toolbarActiveBGColor1);
 	background: linear-gradient(to bottom, var(--toolbarActiveBGColor1) 0%, var(--toolbarActiveBGColor2) 100%);
-	border: 1px solid rgba(0,0,0,0.15);
-	border-bottom: none;
-	border-top: none;
-	margin-left: -1px;
+	border-color: rgba(0,0,0,0.15);
 	box-shadow: 1px 0px 0px 0px hsla(0, 0%, var(--themeLightness), 0.25), -1px 0px 0px 0px hsla(0, 0%, var(--themeLightness), 0.25), 0px 1px 0px 0px rgba(0,0,0,0.1) inset, 0 -1px 0 rgba(0,0,0,0.2);
 }
 #toolbar .tab-group button.tab[data-mode="delete"].current {

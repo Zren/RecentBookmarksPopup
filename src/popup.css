@@ -298,3 +298,12 @@ body.toolbar-hidden #toolbar {
 	background: #ee6644;
 	background: linear-gradient(to bottom, #ee6644 0%, #ff7755 100%);
 }
+#toolbar .tab-group button.tab#open-options-page img {
+	width: 1em;
+	height: 1em;
+}
+@media(prefers-color-scheme: dark) {
+	#toolbar .tab-group button.tab#open-options-page img {
+		filter: invert(1);
+	}
+}

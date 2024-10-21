@@ -479,6 +479,10 @@ function setupBookmarkList() {
 		checkBookmarkListScroll()
 	})
 }
+function openOptionsPage() {
+	chrome.runtime.openOptionsPage()
+	window.close()
+}
 
 var doRender = function() {
 	// console.log('doRender')
@@ -497,5 +501,8 @@ var main = function() {
 		updateBookmarksList()
 		updateToolbar()
 	})
+
+	const openOptionsPageButton = document.querySelector('button#open-options-page')
+	openOptionsPageButton.addEventListener('click', openOptionsPage)
 }
 document.addEventListener('DOMContentLoaded', main)

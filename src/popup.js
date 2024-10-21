@@ -6,7 +6,7 @@ var randomPastelColor = function() {
 	// https://stackoverflow.com/a/43195379/947742
 	return "hsl(" + 360 * Math.random() + ', ' + // Hue: Any
 		(25 + 70 * Math.random()) + '%, ' + // Saturation: 25-95
-		(40 + 30 * Math.random()) + '%)'; // Lightness: 40-70
+		(40 + 30 * Math.random()) + '%)' // Lightness: 40-70
 }
 var randomPastelHsl = function() {
 	return {
@@ -475,4 +475,4 @@ var main = function() {
 		}
 	})
 }
-document.addEventListener('DOMContentLoaded', main);
+document.addEventListener('DOMContentLoaded', main)

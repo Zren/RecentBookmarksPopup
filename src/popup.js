@@ -363,7 +363,7 @@ var renderBookmarksList = function() {
 				['.bookmarks-section', 'attributes.data-date', bookmarkDateStr],
 				['.bookmarks-section', 'attributes.aria-label', sectionTitle],
 				['.section-title', 'textContent', sectionTitle],
-				['.section-title', 'attributes.title', sectionTitle],
+				['.section-title', 'attributes.title', bookmarkDateStr],
 			])
 			section.addEventListener('click', onBookmarkSectionClick)
 			bookmarkList.appendChild(section)

@@ -370,7 +370,7 @@ var renderBookmarksList = function() {
 		if (!isAlreadyRendered && bookmarkDateStr != lastDateStr) {
 			let sectionTitle = bookmarkDateStr
 			if (config.showRelativeDate) {
-				sectionTitle = timeAgo(bookmarkDateStr)
+				sectionTitle = timeAgo(bookmarkDateStr) + ' ( ' + bookmarkDateStr + ' )'
 			}
 			const longDateStr = formatDateWithWeekday(bookmarkDateStr)
 			let section = renderTemplate('#bookmarkListSection', [

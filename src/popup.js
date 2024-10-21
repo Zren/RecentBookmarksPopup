@@ -383,14 +383,15 @@ var renderBookmarksList = function() {
 		const tagStyle = '--tagHue: ' + tagHue + '; --tagSaturation: ' + tagSaturation + ';'
 		const tag = state.tagMap[bookmarkTreeNode.parentId] || ''
 
-		let e
+		let el
 		if (isAlreadyRendered) {
-			e = bookmarkList.querySelector('.bookmarks-item[data-id="' + bookmarkTreeNode.id + '"')
+			el = bookmarkList.querySelector('.bookmarks-item[data-id="' + bookmarkTreeNode.id + '"')
 		} else {
-			e = renderTemplate('#bookmarkListItem')
+			el = renderTemplate('#bookmarkListItem')
 		}
+		console.log('i', i, 'isAlreadyRendered', isAlreadyRendered, 'el', el)
 
-		updateElement(e, [
+		updateElement(el, [
 			['.bookmarks-item', 'attributes.data-id', bookmarkTreeNode.id],
 			['.bookmarks-item', 'attributes.data-date', bookmarkDateStr],
 			['.bookmarks-item', 'attributes.href', bookmarkTreeNode.url],
@@ -402,7 +403,7 @@ var renderBookmarksList = function() {
 			['.bookmark-tag', 'attributes.style', tagStyle],
 		])
 
-		var favicon = e.querySelector('.favicon')
+		var favicon = el.querySelector('.favicon')
 		if (isChrome) {
 			favicon.style.backgroundImage = getFaviconImageSet(bookmarkTreeNode.url)
 		} else { // isFirefox
@@ -412,8 +413,8 @@ var renderBookmarksList = function() {
 			favicon.setAttribute('data-hostname', url.hostname)
 		}
 		if (!isAlreadyRendered) {
-			e.addEventListener('click', onBookmarkItemClick)
-			bookmarkList.appendChild(e)
+			el.addEventListener('click', onBookmarkItemClick)
+			bookmarkList.appendChild(el)
 		}
 		if (i > state.renderedBookmarkIndex) {
 			state.renderedBookmarkIndex = i

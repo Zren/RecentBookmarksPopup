@@ -228,10 +228,10 @@ function fetchFavicons(callback) {
 	})
 }
 
-function adjustWindowSize() {
-	document.documentElement.style.height = "34px"
-	document.body.style.height = "34px"
-}
+// function adjustWindowSize() {
+// 	document.documentElement.style.height = "34px"
+// 	document.body.style.height = "34px"
+// }
 
 function slideAndRemove(bookmarkListItem, callback) {
 	var duration = 400
@@ -246,7 +246,7 @@ function slideAndRemove(bookmarkListItem, callback) {
 		bookmarkListItem.parentNode.removeChild(bookmarkListItem)
 	}, duration)
 	setTimeout(function() {
-		adjustWindowSize()
+		// adjustWindowSize()
 		if (typeof callback === 'function') {
 			callback()
 		}

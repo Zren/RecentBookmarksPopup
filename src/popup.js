@@ -53,6 +53,16 @@ function timeAgo(input) {
 		}
 	}
 }
+function formatDateWithWeekday(input) {
+	const date = (input instanceof Date) ? input : new Date(input)
+	const formatter = new Intl.DateTimeFormat(undefined, {
+		weekday: 'long',
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+	})
+	return formatter.format(date)
+}
 function updateElement(el, propData) {
 	for (const prop of propData) {
 		const selector = prop[0]
@@ -362,11 +372,12 @@ var renderBookmarksList = function() {
 			if (config.showRelativeDate) {
 				sectionTitle = timeAgo(bookmarkDateStr)
 			}
+			const longDateStr = formatDateWithWeekday(bookmarkDateStr)
 			let section = renderTemplate('#bookmarkListSection', [
 				['.bookmarks-section', 'attributes.data-date', bookmarkDateStr],
 				['.bookmarks-section', 'attributes.aria-label', sectionTitle],
 				['.section-title', 'textContent', sectionTitle],
-				['.section-title', 'attributes.title', bookmarkDateStr],
+				['.section-title', 'attributes.title', longDateStr],
 			])
 			section.addEventListener('click', onBookmarkSectionClick)
 			bookmarkList.appendChild(section)

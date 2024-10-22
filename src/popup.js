@@ -52,6 +52,29 @@ function timeAgo(input) {
 			return formatter.format(Math.round(delta), key)
 		}
 	}
+	return formatter.format(0 / secondsElapsed, 'seconds')
+}
+// Modified from https://stackoverflow.com/a/69122877/947742
+function daysAgo(input) {
+	const date = (input instanceof Date) ? input : new Date(input)
+	const formatter = new Intl.RelativeTimeFormat(undefined, {
+		numeric: "auto", // today / yesterday
+	})
+	const ranges = {
+		years: 365,
+		months: 30,
+		weeks: 7,
+		days: 1,
+	}
+	const daysElapsed = (date.getTime() - Date.now()) / (1000 * 3600 * 24)
+	for (let key in ranges) {
+		if (ranges[key] < Math.abs(daysElapsed)) {
+			const delta = daysElapsed / ranges[key]
+			return formatter.format(Math.round(delta), key)
+		}
+	}
+	// Today / less than 1 day
+	return formatter.format(0 / daysElapsed, 'days')
 }
 function formatDateWithWeekday(input) {
 	const date = (input instanceof Date) ? input : new Date(input)
@@ -370,9 +393,9 @@ var renderBookmarksList = function() {
 		if (!isAlreadyRendered && bookmarkDateStr != lastDateStr) {
 			let sectionTitle = bookmarkDateStr
 			if (config.showRelativeDate) {
-				sectionTitle = timeAgo(bookmarkDateStr) + ' ( ' + bookmarkDateStr + ' )'
+				sectionTitle = daysAgo(bookmarkDate) + ' ( ' + bookmarkDateStr + ' )'
 			}
-			const longDateStr = formatDateWithWeekday(bookmarkDateStr)
+			const longDateStr = formatDateWithWeekday(bookmarkDate)
 			let section = renderTemplate('#bookmarkListSection', [
 				['.bookmarks-section', 'attributes.data-date', bookmarkDateStr],
 				['.bookmarks-section', 'attributes.aria-label', sectionTitle],

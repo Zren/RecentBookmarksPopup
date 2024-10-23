@@ -11,6 +11,7 @@ This is a very simple extension that lists the most recent bookmarks.
 * Shows a tag with the parent folder name.
 * Can easily delete multiple recent bookmarks.
 * Can quickly move a bookmark to an "Archive" folder (name is case sensitive).
+* In the options page, you can toggle grouping bookmarks by date, or hide the bottom toolbar.
 
 ## Permissions
 

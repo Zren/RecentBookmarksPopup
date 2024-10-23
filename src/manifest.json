@@ -1,6 +1,6 @@
 {
 	"name": "Recent Bookmarks Popup",
-	"version": "3.1",
+	"version": "4.0",
 	"description": "List recent bookmarks in a toolbar menu.",
 	"permissions": [
 		"bookmarks",
